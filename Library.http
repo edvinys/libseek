@@ -1,0 +1,12 @@
+@Library_HostAddress = http://localhost:5014
+
+GET {{Library_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
+
+POST {{Library_HostAddress}}/user/register/1/edwin/test/email/password/admin
+
+###
+
+POST {{Library_HostAddress}}/user/register/3/edwin3/test3/email3/password3/
