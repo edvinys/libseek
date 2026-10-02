@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Library.Records;
+using System;
 using System.Collections.Generic;
 
 namespace Library.Database;
@@ -19,13 +20,18 @@ public partial class User
 
     public virtual ICollection<Reservation> Reservations { get; set; } = new List<Reservation>();
 
-    public User(int id, string name, string surname, string email, string passwordHash, string role)
+    public User(string name, string surname, string email, string passwordHash)
     {
-        Id = id;
         Name = name;
         Surname = surname;
         Email = email;
         PasswordHash = passwordHash;
-        Role = role;
+    }
+    public User(UserRegisterRecord userRecord)
+    {
+        Name = userRecord.Name;
+        Surname = userRecord.Surname;
+        Email = userRecord.Email;
+        PasswordHash = BCrypt.Net.BCrypt.HashPassword(userRecord.Password);
     }
 }

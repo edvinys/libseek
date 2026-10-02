@@ -137,7 +137,7 @@ public partial class LibraryContext : DbContext
             entity.HasIndex(e => e.Email, "users_email_key").IsUnique();
 
             entity.Property(e => e.Id)
-                .ValueGeneratedNever()
+                .ValueGeneratedOnAdd()
                 .HasColumnName("id");
             entity.Property(e => e.Email)
                 .HasMaxLength(255)

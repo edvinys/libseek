@@ -1,6 +1,8 @@
 using Library.Database;
+using Library.Records;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using BCrypt;
 
 namespace Library.Controllers
 {
@@ -14,21 +16,16 @@ namespace Library.Controllers
             _db = db;
         }
 
-        [HttpPost("/user/register/{id}/{name}/{surname}/{email}/{password}/{role}")]
-        public async Task<IActionResult> PutUsersInDB(int id, string name, string surname,
-            string email, string password, string? role)
+        [HttpPost("/user/register")]
+        public async Task<IActionResult> PutUsersInDB(UserRegisterRecord userRegister)
         {
+            bool emailExists = await _db.Users.Where(user => user.Email == userRegister.Email).AnyAsync();
+
+            if (emailExists) return Conflict("Email already exists");
+
             try
             {
-                if (name == null
-               || surname == null
-               || email == null
-               || password == null)
-                {
-                    return BadRequest();
-                }
-
-                User user = new User(id, name, surname, email, password, role);
+                User user = new User(userRegister);
 
                 _db.Users.Add(user);
 
@@ -38,17 +35,11 @@ namespace Library.Controllers
             }
             catch (DbUpdateException)
             {
-                return BadRequest();
+                return BadRequest(new
+                {
+                    message = "The user could not be saved"
+                });
             }
         }
-
-
-        [HttpPost("/user/register/{id}/{name}/{surname}/{email}/{password}")]
-        public async Task<IActionResult> PutUsersInDB(int id, string name, string surname,
-            string email, string password)
-        {
-            return await PutUsersInDB(id, name, surname, email, password, null);
-        }
-
     }
 }
