@@ -32,6 +32,7 @@ namespace Library.Migrations
                         .HasColumnName("id");
 
                     b.Property<DateOnly?>("Birthdate")
+                        .IsRequired()
                         .HasColumnType("date")
                         .HasColumnName("birthdate");
 

@@ -25,8 +25,11 @@ namespace Library.Migrations
             modelBuilder.Entity("Library.Database.Author", b =>
                 {
                     b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
                         .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<DateOnly?>("Birthdate")
                         .HasColumnType("date")
@@ -53,8 +56,11 @@ namespace Library.Migrations
             modelBuilder.Entity("Library.Database.Book", b =>
                 {
                     b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
                         .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<int>("AuthorId")
                         .HasColumnType("integer")
@@ -83,8 +89,11 @@ namespace Library.Migrations
             modelBuilder.Entity("Library.Database.BookCopy", b =>
                 {
                     b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
                         .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<int>("BookId")
                         .HasColumnType("integer")
@@ -101,8 +110,11 @@ namespace Library.Migrations
             modelBuilder.Entity("Library.Database.Reservation", b =>
                 {
                     b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
                         .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<int>("CopyId")
                         .HasColumnType("integer")
@@ -194,13 +206,11 @@ namespace Library.Migrations
 
             modelBuilder.Entity("Library.Database.Book", b =>
                 {
-                    b.HasOne("Library.Database.Author", "Author")
+                    b.HasOne("Library.Database.Author", null)
                         .WithMany("Books")
                         .HasForeignKey("AuthorId")
-                        .IsRequired()
-                        .HasConstraintName("books_author_id_foreign");
-
-                    b.Navigation("Author");
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Library.Database.BookCopy", b =>

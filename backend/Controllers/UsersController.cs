@@ -3,6 +3,7 @@ using Library.Records;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using BCrypt;
+using System.Data.Common;
 
 namespace Library.Controllers
 {
@@ -17,7 +18,7 @@ namespace Library.Controllers
         }
 
         [HttpPost("/user/register")]
-        public async Task<IActionResult> PutUsersInDB(UserRegisterRecord userRegister)
+        public async Task<IActionResult> PutUsersInDB(UserRecord userRegister)
         {
             bool emailExists = await _db.Users.Where(user => user.Email == userRegister.Email).AnyAsync();
 
@@ -29,7 +30,7 @@ namespace Library.Controllers
 
                 _db.Users.Add(user);
 
-                _db.SaveChanges();
+                await _db.SaveChangesAsync();
 
                 return Ok();
             }
@@ -41,5 +42,6 @@ namespace Library.Controllers
                 });
             }
         }
+
     }
 }

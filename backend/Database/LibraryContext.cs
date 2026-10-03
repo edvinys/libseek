@@ -39,7 +39,7 @@ public partial class LibraryContext : DbContext
             entity.ToTable("authors");
 
             entity.Property(e => e.Id)
-                .ValueGeneratedNever()
+                .ValueGeneratedOnAdd()
                 .HasColumnName("id");
             entity.Property(e => e.Birthdate).HasColumnName("birthdate");
             entity.Property(e => e.Name)
@@ -59,7 +59,7 @@ public partial class LibraryContext : DbContext
             entity.HasIndex(e => e.AuthorId, "books_author_id_index");
 
             entity.Property(e => e.Id)
-                .ValueGeneratedNever()
+                .ValueGeneratedOnAdd()
                 .HasColumnName("id");
             entity.Property(e => e.AuthorId).HasColumnName("author_id");
             entity.Property(e => e.Genre)
@@ -68,11 +68,6 @@ public partial class LibraryContext : DbContext
             entity.Property(e => e.Title)
                 .HasMaxLength(100)
                 .HasColumnName("title");
-
-            entity.HasOne(d => d.Author).WithMany(p => p.Books)
-                .HasForeignKey(d => d.AuthorId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("books_author_id_foreign");
         });
 
         modelBuilder.Entity<BookCopy>(entity =>
@@ -84,7 +79,7 @@ public partial class LibraryContext : DbContext
             entity.HasIndex(e => e.BookId, "book_copies_book_id_index");
 
             entity.Property(e => e.Id)
-                .ValueGeneratedNever()
+                .ValueGeneratedOnAdd()
                 .HasColumnName("id");
             entity.Property(e => e.BookId).HasColumnName("book_id");
 
@@ -105,7 +100,7 @@ public partial class LibraryContext : DbContext
             entity.HasIndex(e => e.UserId, "reservations_user_id_index");
 
             entity.Property(e => e.Id)
-                .ValueGeneratedNever()
+                .ValueGeneratedOnAdd()
                 .HasColumnName("id");
             entity.Property(e => e.CopyId).HasColumnName("copy_id");
             entity.Property(e => e.EndDate).HasColumnName("end_date");

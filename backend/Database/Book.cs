@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Library.Records;
+using System;
 using System.Collections.Generic;
+using System.Security.Cryptography.X509Certificates;
 
 namespace Library.Database;
 
@@ -13,7 +15,13 @@ public partial class Book
 
     public int AuthorId { get; set; }
 
-    public virtual Author Author { get; set; } = null!;
-
     public virtual ICollection<BookCopy> BookCopies { get; set; } = new List<BookCopy>();
+    public Book()
+    {
+    }
+    public Book(BookRecord bookRecord)
+    {
+        Title = bookRecord.Title;
+        Genre = bookRecord.Genre;
+    }
 }

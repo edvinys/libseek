@@ -20,18 +20,19 @@ public partial class User
 
     public virtual ICollection<Reservation> Reservations { get; set; } = new List<Reservation>();
 
-    public User(string name, string surname, string email, string passwordHash)
+    public User()
+    {
+
+    }
+    public User(string name, string surname, string email, string password)
     {
         Name = name;
         Surname = surname;
         Email = email;
-        PasswordHash = passwordHash;
+        PasswordHash = BCrypt.Net.BCrypt.HashPassword(password);
     }
-    public User(UserRegisterRecord userRecord)
+    public User(UserRecord userRecord) : this(userRecord.Name, userRecord.Surname,
+        userRecord.Email, userRecord.Password)
     {
-        Name = userRecord.Name;
-        Surname = userRecord.Surname;
-        Email = userRecord.Email;
-        PasswordHash = BCrypt.Net.BCrypt.HashPassword(userRecord.Password);
     }
 }
