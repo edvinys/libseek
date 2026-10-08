@@ -9,25 +9,25 @@ namespace Library.Controllers
 {
     public class BookController : Controller
     {
-        private readonly LibraryContext _db;
+        private readonly LibraryContext DB;
         public BookController(LibraryContext db)
         {
-            _db = db;
+            DB = db;
         }
 
-        [HttpPost("/book/register")]
+        [HttpPost("api/book/register")]
         public async Task<IActionResult> PutBookInDB(BookRecord bookRecord)
         {
             string authorNameSurname = bookRecord.AuthorName + " " + bookRecord.AuthorSurname;
-            bool bookExists = await _db.Books
+            bool bookExists = await DB.Books
                 .Where(book => book.Title.ToLower() == bookRecord.Title.ToLower() &&
-                        _db.Authors.Where(author => author.Id == book.AuthorId).First().Name
+                        DB.Authors.Where(author => author.Id == book.AuthorId).First().Name
                         == bookRecord.AuthorName.ToLower())
                 .AnyAsync();
 
 
             if (bookExists) return Conflict($"{bookRecord.Title}" +
-                $" by {bookRecord.AuthorName} {bookRecord.AuthorSurname} already exists");
+                $" by {authorNameSurname} already exists");
 
             //
 
@@ -35,7 +35,7 @@ namespace Library.Controllers
             {
                 Book book = new Book(bookRecord);
 
-                Author author = await _db.Authors
+                Author author = await DB.Authors
                     .FirstOrDefaultAsync
                         (author => author.Name.ToLower() == bookRecord.AuthorName.ToLower() &&
                         author.Surname.ToLower() == bookRecord.AuthorSurname.ToLower());
@@ -49,24 +49,26 @@ namespace Library.Controllers
 
                     author = new Author(bookRecord);
 
-                    await _db.Authors.AddAsync(author);
-                    await _db.SaveChangesAsync();
+                    await DB.Authors.AddAsync(author);
+                    await DB.SaveChangesAsync();
                 }
 
                 book.AuthorId = author.Id;
-                await _db.Books.AddAsync(book);
+                await DB.Books.AddAsync(book);
 
-                await _db.SaveChangesAsync();
+                await DB.SaveChangesAsync();
             }
             catch (DbException)
             {
                 return BadRequest(new
                 {
-                    message = "Something went wrong"
+                    message = "Book could not be added."
                 });
             }
 
             return Ok();
         }
+
+
     }
 }
