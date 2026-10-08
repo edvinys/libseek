@@ -4,33 +4,37 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using BCrypt;
 using System.Data.Common;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Library.Controllers
 {
     [ApiController]
+    [Authorize]
     [Route("[controller]")]
     public class UsersController : ControllerBase
     {
-        private readonly LibraryContext _db;
-        public UsersController(LibraryContext db)
+        private readonly LibraryContext DB;
+        private readonly ILogger<UsersController> Logger;
+        public UsersController(LibraryContext db, ILogger<UsersController> logger)
         {
-            _db = db;
+            DB = db;
+            Logger = logger;
         }
 
-        [HttpPost("/user/register")]
-        public async Task<IActionResult> PutUsersInDB(UserRecord userRegister)
+        [HttpPost("api/user/register")]
+        public async Task<IActionResult> PutUsersInDB(UserRecord userRecord)
         {
-            bool emailExists = await _db.Users.Where(user => user.Email == userRegister.Email).AnyAsync();
+            bool emailExists = await DB.Users.Where(user => user.Email.ToLower() == userRecord.Email.ToLower()).AnyAsync();
 
             if (emailExists) return Conflict("Email already exists");
 
             try
             {
-                User user = new User(userRegister);
+                User user = new User(userRecord);
 
-                _db.Users.Add(user);
+                DB.Users.Add(user);
 
-                await _db.SaveChangesAsync();
+                await DB.SaveChangesAsync();
 
                 return Ok();
             }
