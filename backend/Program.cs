@@ -19,7 +19,8 @@ builder.Services.AddCors(options =>
     options.AddPolicy("Frontend", policy =>
         policy.WithOrigins("http://localhost:5173")
               .AllowAnyHeader()
-              .AllowAnyMethod());
+              .AllowAnyMethod()
+              .AllowCredentials());
 });
 
 //---- Add services to the container.
@@ -75,6 +76,14 @@ builder.Services
         ValidateLifetime = true,
         ValidateIssuerSigningKey = true
 
+    };
+    option.Events = new JwtBearerEvents
+    {
+        OnMessageReceived = context =>
+        {
+            context.Token = context.Request.Cookies["sid"];
+            return Task.CompletedTask;
+        }
     };
 });
 builder.Services.AddAuthorization();
