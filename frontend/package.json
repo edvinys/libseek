@@ -10,6 +10,11 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@coreui/coreui": "^5.9.1",
+    "@coreui/icons": "^3.1.0",
+    "@coreui/icons-react": "^2.3.0",
+    "@coreui/react": "^5.13.1",
+    "admin-lte": "^4.10.0",
     "bootstrap": "^5.3.8",
     "react": "^19.2.8",
     "react-bootstrap": "^2.10.10",
