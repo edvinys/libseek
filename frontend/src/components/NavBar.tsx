@@ -1,11 +1,10 @@
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import NavDropdown from 'react-bootstrap/NavDropdown';
-import {Button, Form} from "react-bootstrap";
-import {logout} from "../logout.ts";
+import {logout} from "../authentication/logout.ts";
 
-function NavBar() {
+function NavBar()
+{
     return (
         <Navbar expand="false" style={{backgroundColor: "aliceblue"}}>
             <Container>
@@ -15,7 +14,7 @@ function NavBar() {
                     <Nav className="ms-auto align-items-end">
                         <Nav.Link href='/'>Home</Nav.Link>
                         <Nav.Link href='/about'>About</Nav.Link>
-                        <Nav.Link onClick={logout} id={"logout-button"}>Log out </Nav.Link>
+                        <Nav.Link onClick={logout} id={"logout-button"}>Log out</Nav.Link>
                     </Nav>
                 </Navbar.Collapse>
             </Container>
