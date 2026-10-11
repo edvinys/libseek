@@ -41,7 +41,7 @@ namespace Library.Controllers
                     HttpOnly = true, // prevent JS from reading
                     Secure = true, // only https
                     SameSite = Microsoft.AspNetCore.Http.SameSiteMode.None, // prevent attacks
-                    Expires = DateTime.Now.AddDays(1), // expiration
+                    Expires = DateTime.Now.AddMinutes(90), // expiration
                     IsEssential = true,
                 };
 
@@ -83,6 +83,8 @@ namespace Library.Controllers
             var claim = new List<Claim>
             {
                 new Claim(ClaimTypes.Email, $"{user.Email}"),
+                new Claim(ClaimTypes.Name, $"{user.Name}"),
+                new Claim(ClaimTypes.Surname, $"{user.Surname}"),
                 new Claim(ClaimTypes.Role, $"{user.Role}")
             };
 
@@ -97,7 +99,6 @@ namespace Library.Controllers
                 claims: claim,
                 signingCredentials : signingCredential,
                 expires: DateTime.Now.AddMinutes(expirationInMins)
-                
                 );
 
             return new JwtSecurityTokenHandler().WriteToken(token);
