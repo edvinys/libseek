@@ -83,6 +83,11 @@ builder.Services
         {
             context.Token = context.Request.Cookies["sid"];
             return Task.CompletedTask;
+        },
+        OnAuthenticationFailed = context =>
+        {
+            Console.WriteLine($"{context.Exception.Message}");
+            return Task.CompletedTask;
         }
     };
 });
