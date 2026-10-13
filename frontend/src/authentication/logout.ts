@@ -13,5 +13,5 @@ export async function logout() : Promise<void>
     if (isBaseUrl)
         window.location.reload();
     else
-        window.location.replace("dashboard.html");
+        window.location.replace("");
 }
