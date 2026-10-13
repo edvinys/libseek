@@ -3,19 +3,11 @@ const passwordInput: HTMLInputElement = document.getElementById("passwordInput")
 const loginButton: HTMLButtonElement = document.getElementById("submitButton") as HTMLButtonElement;
 const message: HTMLParagraphElement = document.getElementById("loginMessage") as HTMLParagraphElement;
 
-export default async function LoginAuth(): Promise<Response>
+export default async function Login(email: string, password: string): Promise<Response>
 {
-    let email: string = emailInput.value;
-    let password: string = passwordInput.value;
+    let response : Response = new Response(null, {status: 404});
 
-    return await Login(email, password);
-}
-
-async function Login(email: string, password: string): Promise<Response>
-{
-    let response : Response = new Response();
-
-    console.log("Fetching backend...");
+    console.log("Fetching backend for login...");
     try
     {
         console.log("Sent:", JSON.stringify({Email: email, Password: password}));
@@ -32,51 +24,12 @@ async function Login(email: string, password: string): Promise<Response>
                 body: JSON.stringify({Email: email, Password: password}),
             }
         )
-        console.log("Done fetching backend" + response.status)
+        console.log("Done fetching backend for login" + response.status)
         return response;
     } catch (error)
     {
-        console.log(error);
-        message.style.color = "darkred";
-        message.textContent = "Server error: try again later.";
+        console.log("Could not fetch backend for login, it is likely that the server is offline.");
     }
 
     return response;
 }
-
-// type="submit"
-const form = document.getElementById("loginForm") as HTMLFormElement;
-
-form.addEventListener("submit", async (event): Promise<void> =>
-{
-    const urlIfAuthorized = "/dashboard"
-    event.preventDefault(); // stop the refresh
-    message.style.color = "gray";
-    message.textContent = "..."
-
-    if (emailInput.value == "" && passwordInput.value == "")
-        message.textContent = "Please enter a valid email and password";
-    else if (emailInput.value == "")
-        message.textContent = "Please enter a valid email";
-    else if (passwordInput.value == "")
-        message.textContent = "Please enter your password";
-    else
-    {
-        const response : Response = await LoginAuth()
-        if (response.status == 401)
-        {
-            console.log("Unauthorized");
-            message.style.color = "darkred";
-            message.textContent = "Email or password is incorrect";
-        }
-        if (response.status == 200)
-        {
-            console.log("Ok");
-            message.style.color = "green";
-            message.textContent = "Login successful";
-            window.location.replace(urlIfAuthorized)
-        }
-    }
-
-    return;
-})
