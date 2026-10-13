@@ -1,6 +1,6 @@
-import type Book from "../data classes/Book.ts";
+import type Book from "../data/Book.ts";
 import {data} from "react-router-dom";
-import UserInfo from "../data classes/UserInfo.ts";
+import UserInfo from "../data/UserInfo.ts";
 
 export default class ApiCaller
 {
@@ -40,51 +40,28 @@ export default class ApiCaller
         return false;
     }
 
-    static async getBooks() : Promise<Book[]>
-    {
-        console.log("Retrieving books...")
-
-        const response : Response = await fetch(
-            "https://localhost:7151/api/books",
-            {
-                method: "GET",
-                credentials: "include",
-            }
-        )
-        console.log("Successfully retrieved books")
-        return await response.json();
-    }
-
     static async authenticate() : Promise<Response>
     {
         const response : Response = await fetch
         (
-            "https://localhost:7151/api/login/auth",
+            this.urlForApi + "api/login/auth",
             {
                 method: "POST",
                 credentials: "include",
             }
         );
 
-        const isBaseUrl : boolean = document.baseURI == this.urlForWebsite;
-
         if (response.status == 202)
         {
             console.log("User is authenticated.")
-            if (isBaseUrl)
-                window.location.replace(this.authorizedUrl);
         }
         else if (response.status == 401)
         {
             console.log("User is unauthenticated.");
-            if (!isBaseUrl)
-                window.location.replace(this.urlForWebsite);
         }
         else
         {
             console.log("Server error: unable to connect/unknown error");
-            if (!isBaseUrl)
-                window.location.replace(this.urlForWebsite);
         }
 
         return response;
@@ -95,7 +72,7 @@ export default class ApiCaller
         console.log("Fetching count of books...");
 
         const response : Response = await fetch(
-            "https://localhost:7151/api/books/count",
+            this.urlForApi + "api/books/count",
             {
                 method: "GET",
                 credentials: "include",
@@ -115,7 +92,7 @@ export default class ApiCaller
 
         const response: Response = await fetch
         (
-            "https://localhost:7151/api/user/getinfo",
+            this.urlForApi + "api/user/getinfo",
             {
                 method: "GET",
                 credentials: "include",
@@ -137,5 +114,35 @@ export default class ApiCaller
             window.location.replace(base);
         }
         return null;
+    }
+
+    static async getBooks() : Promise<Book[]>
+    {
+        console.log("Retrieving books...")
+
+        const response : Response = await fetch(
+            this.urlForApi + "api/books",
+            {
+                method: "GET",
+                credentials: "include",
+            }
+        )
+        console.log("Successfully retrieved books")
+        return await response.json();
+    }
+    static async getBook(title : string) : Promise<Book>
+    {
+        console.log(`Retrieving book by title: ${title}...`)
+
+        const response : Response = await fetch(
+            this.urlForApi + `api/books/${title}`,
+            {
+                method: "GET",
+                credentials: "include",
+            }
+        )
+        console.log("Successfully retrieved book by id: " + title);
+
+        return response.json();
     }
 }
