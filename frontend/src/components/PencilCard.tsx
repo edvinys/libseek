@@ -8,12 +8,7 @@ export default function PencilCard()
 
     useEffect(() => {
 
-        async function getBooksCount() : Promise<void>
-        {
-            const books: number = await ApiCaller.getCountOfBooks();
-            setCountBooks(books);
-        }
-        getBooksCount();
+        void ApiCaller.getCountOfBooks().then(setCountBooks)
     },[])
 
     // <i className="icon-pencil primary font-large-2 float-left"></i>
@@ -27,7 +22,7 @@ export default function PencilCard()
                                 <div className="align-self-center">
                                     <img src="src/assets/book_stack.png" alt="" className="float-left" style={{width: 50}}></img>
                                 </div>
-                                <div className="media-body text-right">
+                                <div className="ms-auto text-end">
                                     <h3>{countBooks}</h3>
                                     <span>Total books</span>
                                 </div>
