@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Library.Database;
+namespace Library.Data;
 
 public partial class Author
 {

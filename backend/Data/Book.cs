@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Security.Cryptography.X509Certificates;
 
-namespace Library.Database;
+namespace Library.Data;
 
 public partial class Book
 {
