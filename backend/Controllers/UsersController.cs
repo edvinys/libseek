@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using BCrypt;
 using System.Data.Common;
 using Microsoft.AspNetCore.Authorization;
+using Library.Data;
 
 namespace Library.Controllers
 {

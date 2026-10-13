@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using BCrypt;
 using System.Data.Common;
+using Library.Data;
 
 namespace Library.Controllers
 {
@@ -68,7 +69,5 @@ namespace Library.Controllers
 
             return Ok();
         }
-
-
     }
 }
