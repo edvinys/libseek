@@ -47,7 +47,7 @@ namespace Library.Controllers
                 }).ToList();
             return Ok(booksAndAuthor);
         }
-        [HttpGet("api/books/{title}")]
+        [HttpGet("api/books/get/{title}")]
         public async Task<IActionResult> GetBookByTitle(string title)
         {
             title = title.ToLower();
