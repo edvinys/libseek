@@ -1,8 +1,8 @@
 import {useEffect, useState} from "react";
 import ApiCaller from "../apiCall/ApiCaller.ts"
-import {LoadingSpinner} from "./LoadingSpinner.tsx";
+import {LoadingSpinner} from "../components/LoadingSpinner.tsx";
 import {type NavigateFunction, Outlet, useNavigate} from "react-router-dom";
-import {SideBar} from "./SideBar.tsx";
+import {SideBar} from "../components/SideBar.tsx";
 
 export default function LoadingLayout()
 {
@@ -19,7 +19,7 @@ export default function LoadingLayout()
 
             setTimeout(() => {setIsLoading(!response.ok);}, 2000);
         }
-        isAuthenticated()
+        void isAuthenticated()
     }, []);
     if (isLoading)
         return <LoadingSpinner />

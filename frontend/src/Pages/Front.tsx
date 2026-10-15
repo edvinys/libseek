@@ -5,7 +5,6 @@ import Login from "../components/Login.tsx";
 export default function Front()
 {
     return(<>
-        <NavBar />
         <Login></Login>
     </>)
 }

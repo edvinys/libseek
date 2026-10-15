@@ -9,6 +9,13 @@ type SearchBarProps = {
 export default function SearchBarButton({onSearch}: SearchBarProps)
 {
     const [text, setText] = useState("");
+    const [badInputMessage, setBadInputMessage] = useState("");
+
+    function onBadInput() : void
+    {
+        setBadInputMessage("Please enter something.");
+        return;
+    }
 
     return (
         <div className="container">
@@ -23,15 +30,30 @@ export default function SearchBarButton({onSearch}: SearchBarProps)
                                {
                                    if (e.key == "Enter")
                                    {
-                                       onSearch(text);
+                                       if (text == "")
+                                           onBadInput();
+                                       else
+                                       {
+                                           onSearch(text);
+                                           setBadInputMessage("");
+                                       }
+
                                    }
                                }}/>
                         <button type="button" className="btn btn-outline-primary"
                                 style={{marginTop: "10px", display:"flex", marginLeft:"auto",marginRight:"auto"}}
                                 onClick={(e) =>
                                 {
-                                    onSearch(text)}}>
-                            Primary</button>
+                                    if (text == "")
+                                        onBadInput();
+                                    else
+                                    {
+                                        onSearch(text);
+                                        setBadInputMessage("");
+                                    }
+                                }}>
+                            Search</button>
+                        <p id="badInputMessage" style={{textAlign: "center", color:"darkred"}}>{badInputMessage}</p>
                     </div>
                 </div>
             </div>

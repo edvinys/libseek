@@ -130,12 +130,12 @@ export default class ApiCaller
         console.log("Successfully retrieved books")
         return await response.json();
     }
-    static async getBook(title : string) : Promise<Book>
+    static async getBook(title : string ) : Promise<Book | null>
     {
         console.log(`Retrieving book by title: ${title}...`)
 
         const response : Response = await fetch(
-            this.urlForApi + `api/books/${title}`,
+            this.urlForApi + `api/books/get/${title}`,
             {
                 method: "GET",
                 credentials: "include",
@@ -143,6 +143,13 @@ export default class ApiCaller
         )
         console.log("Successfully retrieved book by id: " + title);
 
-        return response.json();
+        if (response.ok)
+        {
+            return response.json();
+        }
+        else
+        {
+            return null;
+        }
     }
 }

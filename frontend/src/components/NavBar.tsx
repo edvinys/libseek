@@ -2,21 +2,22 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import {logout} from "../authentication/logout.ts";
+import {useNavigate} from "react-router-dom";
+import {NavDropdown} from "react-bootstrap";
 
 function NavBar()
 {
+    const navigate = useNavigate();
+
     return (
         <Navbar expand="false" style={{backgroundColor: "aliceblue"}}>
             <Container>
                 <Navbar.Brand href="/">Libseek</Navbar.Brand>
-                <Navbar.Toggle aria-controls="basic-navbar-nav" />
-                <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
-                    <Nav className="ms-auto align-items-end">
-                        <Nav.Link href='/'>Home</Nav.Link>
-                        <Nav.Link href='/about'>About</Nav.Link>
-                        <Nav.Link onClick={logout} id={"logout-button"}>Log out</Nav.Link>
-                    </Nav>
-                </Navbar.Collapse>
+                <NavDropdown title="Settings" id="basic-nav-dropdown">
+                    <NavDropdown.Item onClick={() => navigate("/")}>Login</NavDropdown.Item>
+                    <NavDropdown.Item onClick={() => navigate("/about")}>About</NavDropdown.Item>
+                    <NavDropdown.Item onClick={logout} id={"logout-button"}>Logout</NavDropdown.Item>
+                </NavDropdown>
             </Container>
         </Navbar>
     );
