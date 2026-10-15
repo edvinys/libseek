@@ -6,15 +6,6 @@ import {defineConfig, type Plugin} from 'vite'
 function cleanAboutUrl(): Plugin {
   return {
     name: 'clean-about-url',
-    configureServer(server) {
-      server.middlewares.use((request, _response, next) => {
-        if (request.url === '/about') {
-          request.url = '/about.html';
-        }
-
-        next();
-      });
-    },
   };
 }
 

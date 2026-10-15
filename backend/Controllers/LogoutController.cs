@@ -17,7 +17,6 @@ namespace Library.Controllers
                 SameSite = Microsoft.AspNetCore.Http.SameSiteMode.None, // prevent attacks
                 IsEssential = true,
             };
-
             Response.Cookies.Delete("sid", cookieOptions);
             Response.Cookies.Delete("id", cookieOptions);
             Response.Cookies.Delete("name", cookieOptions); 
