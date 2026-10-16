@@ -5,9 +5,12 @@ using Microsoft.EntityFrameworkCore;
 using BCrypt;
 using System.Data.Common;
 using Library.Data;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Library.Controllers
 {
+    [ApiController]
+    [Authorize]
     public class BookController : Controller
     {
         private readonly LibraryContext DB;
@@ -16,7 +19,7 @@ namespace Library.Controllers
             DB = db;
         }
 
-        [HttpPost("api/book/register")]
+        [HttpPost("api/books/add")]
         public async Task<IActionResult> PutBookInDB(BookRecord bookRecord)
         {
             string authorNameSurname = bookRecord.AuthorName + " " + bookRecord.AuthorSurname;
@@ -36,7 +39,7 @@ namespace Library.Controllers
             {
                 Book book = new Book(bookRecord);
 
-                Author author = await DB.Authors
+                Author? author = await DB.Authors
                     .FirstOrDefaultAsync
                         (author => author.Name.ToLower() == bookRecord.AuthorName.ToLower() &&
                         author.Surname.ToLower() == bookRecord.AuthorSurname.ToLower());
@@ -45,8 +48,11 @@ namespace Library.Controllers
 
                 if (!authorExists)
                 {
-                    if (bookRecord.AuthorBirthdate == null) return Conflict($"{bookRecord.Title} exists"
-                        + $" but {authorNameSurname} birth date is not specified");
+                    if (bookRecord.AuthorBirthdate == null) return Conflict( new
+                    {
+                        message = $"{bookRecord.Title} exists"
+                        + $" but {authorNameSurname} birth date is not specified"
+                    });
 
                     author = new Author(bookRecord);
 
@@ -63,7 +69,8 @@ namespace Library.Controllers
             {
                 return BadRequest(new
                 {
-                    message = "Book could not be added."
+                    message = "Book could not be added." +
+                    " It is likely that a required field was bypassed."
                 });
             }
 
