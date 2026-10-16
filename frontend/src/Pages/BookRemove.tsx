@@ -38,7 +38,7 @@ export default function BookRemove()
     return(
         <>
             <h4 className="mb-4">Remove book</h4>
-            <SearchBarButton onSearch={handleSearch}/>
+            <SearchBarButton onSearch={handleSearch} onBadInputs={() => setHideTable(true)} />
             <div style={{width: "70%", marginTop: "20px"}}>
                 <BookTable books={book} hidden={hideTable}/>
             </div>
