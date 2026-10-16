@@ -99,6 +99,4 @@ export default function Login()
             }, 200)
         }
     }
-    //    <script type="module" src="/src/authentication/authenticate.ts"></script>
-    //     <script type="module" src="/src/authentication/login.ts"></script>
 }
