@@ -4,15 +4,17 @@ import "@coreui/coreui/dist/css/coreui.min.css";
 
 type SearchBarProps = {
     onSearch: (value: string) => void;
+    onBadInputs: () => void;
 }
 
-export default function SearchBarButton({onSearch}: SearchBarProps)
+export default function SearchBarButton({onSearch, onBadInputs}: SearchBarProps)
 {
     const [text, setText] = useState("");
     const [badInputMessage, setBadInputMessage] = useState("");
 
     function onBadInput() : void
     {
+        onBadInputs();
         setBadInputMessage("Please enter something.");
         return;
     }
@@ -37,7 +39,6 @@ export default function SearchBarButton({onSearch}: SearchBarProps)
                                            onSearch(text);
                                            setBadInputMessage("");
                                        }
-
                                    }
                                }}/>
                         <button type="button" className="btn btn-outline-primary"
