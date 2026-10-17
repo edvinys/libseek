@@ -58,6 +58,7 @@ export const SideBar = () =>
 
     return (
         <CSidebar className="border-end min-vh-100" unfoldable={false}>
+            {/* Logo */}
             <CSidebarHeader className="position-relative">
                 <CSidebarBrand>
                     <img
@@ -68,7 +69,9 @@ export const SideBar = () =>
                     </img>
                 </CSidebarBrand>
             </CSidebarHeader>
+
             <CSidebarNav variant="tree">
+                {/* Dashboard */}
                 <CNavItem as="div">
                     <CNavLink
                         onClick={() => navigate("/dashboard")}
@@ -76,25 +79,15 @@ export const SideBar = () =>
                         <CIcon customClassName="nav-icon" icon={cilBarChart}/>Dashboard
                     </CNavLink>
                 </CNavItem>
-                <CNavItem disabled href="#">
-                    <CIcon customClassName="nav-icon" icon={cilSpeedometer} /> Nav item
-                </CNavItem>
-                <CNavItem href="#">
-                    <CIcon customClassName="nav-icon" icon={cilSpeedometer} /> With badge{' '}
-                    <CBadge color="primary ms-auto">NEW</CBadge>
-                </CNavItem>
+
+                {/* Books */}
                 <CNavGroup
                     toggler={({ visible }) => (
                         <>
                             <CIcon customClassName="nav-icon" icon={cilBook} /> Books
                             <span className="nav-group-toggle-indicator">
                 <CIcon className="icon icon-sm" icon={visible ? cilMinus : cilPlus} />
-              </span>
-                        </>
-                    )}
-                    compact
-                    visible
-                >
+              </span></>)} compact visible>
                     <CNavLink
                         onClick={() => navigate("/book/add")}
                         style={{cursor: "pointer", paddingLeft:"25px"}}>
@@ -106,16 +99,15 @@ export const SideBar = () =>
                         <CNavItem href="#">Remove</CNavItem>
                     </CNavLink>
                 </CNavGroup>
+
+                {/* Settings */}
                 <CNavGroup
                     toggler={({ visible }) => (
                         <>
                             <CIcon customClassName="nav-icon" icon={cilSettings} /> Settings group
                             <span className="nav-group-toggle-indicator">
                 <CIcon className="icon icon-sm" icon={visible ? cilMinus : cilPlus} />
-              </span>
-                        </>
-                    )}
-                >
+                            </span></>)}>
                     <CNavItem href="#">Item</CNavItem>
                     <CNavItem href="#">Item</CNavItem>
                     <CNavGroup
@@ -135,10 +127,14 @@ export const SideBar = () =>
                         <CNavItem href="#">Item</CNavItem>
                     </CNavGroup>
                 </CNavGroup>
+
+                {/* Coreui */}
                 <CNavItem href="https://coreui.io">
                     <CIcon customClassName="nav-icon" icon={cilCloudDownload} /> Download CoreUI
                 </CNavItem>
             </CSidebarNav>
+
+            {/* Footer */}
             <CSidebarFooter className={"mt-auto"}>
                 <CDropdown className="w-100" direction="dropup">
                     <CDropdownToggle
