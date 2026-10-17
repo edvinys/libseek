@@ -21,21 +21,15 @@ export default class ApiCaller
         if (response.status == 202)
         {
             console.log("User is authenticated.")
-            if (isBaseUrl)
-                window.location.replace(this.authorizedUrl);
             return true;
         }
         else if (response.status == 401)
         {
             console.log("User is unauthenticated.");
-            if (!isBaseUrl)
-                window.location.replace(this.urlForWebsite);
         }
         else
         {
             console.log("Server error: unable to connect/unknown error");
-            if (!isBaseUrl)
-                window.location.replace(this.urlForWebsite);
         }
         return false;
     }
@@ -106,12 +100,10 @@ export default class ApiCaller
         if (response.status == 401)
         {
             console.log("User isn't logged in");
-            window.location.replace(base);
         }
         if (response.status == 404)
         {
             console.log("User wasn't found in database");
-            window.location.replace(base);
         }
         return null;
     }
@@ -150,6 +142,80 @@ export default class ApiCaller
         else
         {
             return null;
+        }
+    }
+    static async addBook(book : Book) : Promise<boolean>
+    {
+        try
+        {
+            console.log("Trying to add book: " + book.title);
+            let dataString : string | undefined = undefined;
+
+            if (book.authorBirthDate)
+            {
+                if (book.authorBirthDate?.getMonth() + 1 > 10)
+                {
+                    dataString =
+                        book.authorBirthDate?.getFullYear() + "-" +
+                        (book.authorBirthDate?.getMonth() + 1) + "-" +
+                        book.authorBirthDate?.getDate();
+                }
+                else
+                {
+                    dataString =
+                        book.authorBirthDate?.getFullYear() + "-" +
+                        (book.authorBirthDate?.getMonth() + 1) + "-" +
+                        book.authorBirthDate?.getDate();
+                }
+            }
+
+
+            let bookRecord  =
+            {
+                Title: book.title,
+                Genre: book.genre,
+                AuthorName: book.authorName,
+                AuthorSurname: book.authorSurname,
+                authorBirthDate: dataString ? dataString : null,
+            }
+
+            const json: string = JSON.stringify(bookRecord);
+
+            const response : Response = await fetch(
+                this.urlForApi + `api/books/add`,
+                {
+                    method: "POST",
+                    credentials: "include",
+                    headers:
+                        {
+                            "Content-Type": "application/json",
+                        },
+                    body: json
+                }
+            )
+
+            if (response.status == 200)
+            {
+                console.log("Successfully added book: " + book.title)
+                return true;
+            }
+            if (response.status == 409)
+            {
+                console.log("Conflict error trying to add book: " + book.title);
+                console.log("Backend response: " + await response.text())
+            }
+            else if (response.status == 400)
+            {
+                console.log("Bad request on book: " + book.title);
+                console.log("Backend response: " + await response.text());
+            }
+            return false;
+        }
+        catch(e)
+        {
+            console.log("Error trying to add book: " + book.title);
+            console.log("It is likely that the server is offline.");
+            return false;
         }
     }
 }
