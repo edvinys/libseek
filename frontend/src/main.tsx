@@ -9,17 +9,17 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "@coreui/coreui/dist/css/coreui.min.css";
 import "../style.css";
 import BookRemove from "./Pages/BookRemove.tsx";
-import NavBar from "./components/NavBar.tsx";
 import About from "./Pages/About.tsx";
 import NavBarLayout from "./Layouts/NavBarLayout.tsx";
+import Register from "./Pages/Register.tsx";
 
 createRoot(document.getElementById('root')!).render(
     <BrowserRouter>
         <Routes>
-
             <Route element={<NavBarLayout />} >
-                <Route path ="" element={<Front />} />
-                <Route path ="/about" element={<About />} />
+                <Route path="" element={<Front />} />
+                <Route path="/about" element={<About />} />
+                <Route path="/register" element ={<Register />} />
             </Route>
             <Route element={<LoadingLayout />}>
                 <Route path="/dashboard" element={<Dashboard />} />
