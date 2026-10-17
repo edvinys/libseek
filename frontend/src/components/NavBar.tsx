@@ -12,7 +12,7 @@ function NavBar()
     return (
         <Navbar expand="false" style={{backgroundColor: "aliceblue"}}>
             <Container>
-                <Navbar.Brand href="/">Libseek</Navbar.Brand>
+                <Navbar.Brand href="/">libseek</Navbar.Brand>
                 <NavDropdown title="Settings" id="basic-nav-dropdown">
                     <NavDropdown.Item onClick={() => navigate("/")}>Login</NavDropdown.Item>
                     <NavDropdown.Item onClick={() => navigate("/about")}>About</NavDropdown.Item>
