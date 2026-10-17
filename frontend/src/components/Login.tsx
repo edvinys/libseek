@@ -1,6 +1,6 @@
 import {type ReactNode, useEffect, useState} from "react";
 import login from "../authentication/login"
-import {useNavigate} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import ApiCaller from "../apiCall/ApiCaller.ts";
 
 export default function Login()
@@ -30,12 +30,13 @@ export default function Login()
 
     return (
         <div title="login form">
-        <h3 className="text-center" style={{marginTop: "200px"}}>Log in</h3>
+        <h3 className="text-center">Log in</h3>
         <form
             className='form-center-width-limit'
             id="loginForm"
             onSubmit={(event: React.SubmitEvent<HTMLFormElement>) =>
-            {event.preventDefault(); void handleLogin();}}>
+            {event.preventDefault();
+                void handleLogin();}}>
             <div className="mb-3">
                 <label htmlFor="emailInput"
                        className="form-label">Email address</label>
@@ -45,7 +46,6 @@ export default function Login()
                     id="emailInput"
                     aria-describedby="emailHelp"
                     onChange={(event) => setEmail(event.target.value)}/>
-                <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div>
             </div>
             <div className="mb-3">
                 <label htmlFor="passwordInput" className="form-label">Password</label>
@@ -56,25 +56,41 @@ export default function Login()
                     onChange={(event) =>
                         setPassword(event.target.value)}/>
             </div>
-            <button
-                type="submit"
-                className="btn btn-primary"
-                id="submitButton"
-                disabled={buttonDisabled}>Submit</button>
-            <p id="loginMessage" style={{textAlign: "center", color:messageColor}}>{message}</p>
+            <div className="d-flex justify-content-between align-items-center">
+                <button
+                    type="submit"
+                    className="btn btn-primary"
+                    id="submitButton"
+                    disabled={buttonDisabled}>Submit</button>
+                <Link to={"/forgot/password"} className="fw-bold">Forgot password?</Link>
+            </div>
+            <p id="loginMessage" style={{textAlign: "center", color:messageColor, padding:"10px"}}>{message}</p>
+            <p className="small fw-bold mt-2 pt-1 mb-0 text-center">Don't have an account? {" "}
+                <Link to={"/register"}>Register</Link></p>
         </form>
     </div>
     )
 
-    async function handleLogin()
+    async function handleLogin() : Promise<void>
     {
         setButtonDisabled(true);
+        setMessageColor("grey");
         if (email == "" && password == "")
+        {
             setMessage("Please enter a valid email address and password.");
+            setButtonDisabled(false);
+        }
+
         else if (email == "")
+        {
             setMessage("Please enter a valid email");
+            setButtonDisabled(false);
+        }
         else if (password == "")
+        {
             setMessage("Please enter your password");
+            setButtonDisabled(false);
+        }
         else
         {
             setMessageColor("gray");
