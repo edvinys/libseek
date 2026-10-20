@@ -4,20 +4,39 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Npgsql;
+using StackExchange.Redis;
+using StackExchange.Redis.Extensions.AspNetCore;
+using StackExchange.Redis.Extensions.Core.Configuration;
+using StackExchange.Redis.Extensions.System.Text.Json;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
+string frontendURL = builder.Configuration["URL:frontend"]
+    ?? throw new InvalidOperationException("Could not find frontend url in appsettings.json");
 
 //---- Add database connection
 
 builder.Services.AddDbContext<LibraryContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+
+// https://github.com/imperugo/StackExchange.Redis.Extensions/blob/master/doc/asp.net-core/README.md
+// Configure Redis
+builder.Services.AddStackExchangeRedisExtensions<SystemTextJsonSerializer>(new RedisConfiguration()
+{
+    ConnectionString = builder.Configuration["ConnectionStrings:Redis"]
+    ?? throw new InvalidOperationException("Could not get Redis connection string"),
+    ClientName = "libseek",
+});
+
+builder.Services.AddHealthChecks()
+   .AddRedisExtensionsHealthCheck();
+
 //---- Allow frontend to access
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("Frontend", policy =>
-        policy.WithOrigins("http://localhost:5173")
+        policy.WithOrigins(frontendURL)
               .AllowAnyHeader()
               .AllowAnyMethod()
               .AllowCredentials());
