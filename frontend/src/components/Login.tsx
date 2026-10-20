@@ -13,21 +13,6 @@ export default function Login()
     const urlIfAuthorized : string = "/dashboard";
     const navigate = useNavigate();
 
-    // check if logged in
-    useEffect(() =>
-    {
-        async function authenticateUserOnLoad() : Promise<void>
-        {
-            const response : Response = await ApiCaller.authenticate()
-            if (response.ok)
-            {
-                navigate(urlIfAuthorized, {replace : true})
-            }
-        }
-        void authenticateUserOnLoad()
-
-    }, [navigate])
-
     return (
         <div title="login form">
         <h3 className="text-center">Log in</h3>
