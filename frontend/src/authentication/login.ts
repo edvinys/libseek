@@ -1,8 +1,3 @@
-const emailInput: HTMLInputElement = document.getElementById("emailInput") as HTMLInputElement;
-const passwordInput: HTMLInputElement = document.getElementById("passwordInput") as HTMLInputElement;
-const loginButton: HTMLButtonElement = document.getElementById("submitButton") as HTMLButtonElement;
-const message: HTMLParagraphElement = document.getElementById("loginMessage") as HTMLParagraphElement;
-
 export default async function Login(email: string, password: string): Promise<Response>
 {
     let response : Response = new Response(null, {status: 404});
