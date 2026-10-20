@@ -4,7 +4,7 @@ import SearchBarButton from "../components/SearchBarButton.tsx";
 import type Book from "../data/Book.ts";
 import ApiCaller from "../apiCall/ApiCaller.ts";
 import {useEffect, useState} from "react";
-import AddBookForm from "../Forms/AddBookForm.tsx";
+import AddBookForm from "../forms/AddBookForm.tsx";
 
 export default function BookAdd()
 {

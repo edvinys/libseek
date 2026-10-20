@@ -7,7 +7,7 @@ import type Book from "../data/Book.ts";
 import ApiCaller from "../apiCall/ApiCaller.ts";
 import Alert from 'react-bootstrap/Alert';
 import InfoAlert from "../components/InfoAlert.tsx";
-import useNotification from "../Hooks/useNotification.ts";
+import useNotification from "../hooks/useNotification.ts";
 
 export default function BookRemove()
 {
