@@ -1,17 +1,14 @@
+using Library.Data;
 using Library.Database;
 using Library.Records;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using BCrypt;
-using System.Data.Common;
-using Microsoft.AspNetCore.Authorization;
-using Library.Data;
 
 namespace Library.Controllers
 {
     [ApiController]
     [Authorize]
-    [Route("[controller]")]
     public class UsersController : ControllerBase
     {
         private readonly LibraryContext DB;
@@ -48,5 +45,29 @@ namespace Library.Controllers
             }
         }
 
+
+        [HttpGet("api/user")]
+        public async Task<IActionResult> GetEmailNameSurname()
+        {
+            int.TryParse(Request.Cookies["id"], out int userId);
+
+            if (userId < 0)
+            {
+                return NotFound();
+            }
+
+            var user = await DB.Users.FirstOrDefaultAsync(user => user.Id == userId);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(new
+            {
+                Name = user.Name,
+                Email = user.Email,
+                Surname = user.Surname
+            });
+        }
     }
 }
