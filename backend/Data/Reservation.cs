@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Library.Data;
+﻿namespace Library.Data;
 
 public partial class Reservation
 {
