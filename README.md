@@ -20,3 +20,6 @@ Never did it adjust my project with direct permission: all code was written by m
 ✅ You are allowed to contribute, use the project in non-profit environments.
 
 ❌ You cannot use the project in <u>profittable</u> environments without consulting the owner.
+
+## status
+This project is still not yet finished and still needs work.
