@@ -82,11 +82,9 @@ export default class ApiCaller
     }
     static async getEmailNameSurname() : Promise<UserInfo | null>
     {
-        const base : string = "http://localhost:5173"
-
         const response: Response = await fetch
         (
-            this.urlForApi + "api/user/getinfo",
+            this.urlForApi + "api/user",
             {
                 method: "GET",
                 credentials: "include",
@@ -99,11 +97,12 @@ export default class ApiCaller
         }
         if (response.status == 401)
         {
-            console.log("User isn't logged in");
+            console.log("User isn't logged in when fetching getEmailNameSurname");
         }
         if (response.status == 404)
         {
-            console.log("User wasn't found in database");
+            //
+            console.log("User wasn't found in database when fetching getEmailNameSurname");
         }
         return null;
     }
@@ -127,7 +126,7 @@ export default class ApiCaller
         console.log(`Retrieving book by title: ${title}...`)
 
         const response : Response = await fetch(
-            this.urlForApi + `api/books/get/${title}`,
+            this.urlForApi + `api/books?title=${title}`,
             {
                 method: "GET",
                 credentials: "include",
@@ -182,7 +181,7 @@ export default class ApiCaller
             const json: string = JSON.stringify(bookRecord);
 
             const response : Response = await fetch(
-                this.urlForApi + `api/books/add`,
+                this.urlForApi + `api/books`,
                 {
                     method: "POST",
                     credentials: "include",
