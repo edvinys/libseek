@@ -1,11 +1,9 @@
 using Library.Database;
+using Library.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using Npgsql;
-using StackExchange.Redis;
-using StackExchange.Redis.Extensions.AspNetCore;
 using StackExchange.Redis.Extensions.Core.Configuration;
 using StackExchange.Redis.Extensions.System.Text.Json;
 using System.Text;
@@ -44,6 +42,11 @@ builder.Services.AddCors(options =>
 
 //---- Add services to the container.
 builder.Services.AddControllers();
+
+//---- Add custom services
+// Use scoped since they touch the database.
+builder.Services.AddScoped<IEmailService, SmtpEmailService>(); 
+builder.Services.AddScoped<IAuthService, AuthService>();
 //---- Configure swagger, accept JWT Auth
 
 builder.Services.AddSwaggerGen(options =>
