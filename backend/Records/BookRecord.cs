@@ -1,5 +1,4 @@
-﻿using Library.Database;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Library.Records
 {
