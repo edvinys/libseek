@@ -100,33 +100,14 @@ export const SideBar = () =>
                     </CNavLink>
                 </CNavGroup>
 
-                {/* Settings */}
-                <CNavGroup
-                    toggler={({ visible }) => (
-                        <>
-                            <CIcon customClassName="nav-icon" icon={cilSettings} /> Settings group
-                            <span className="nav-group-toggle-indicator">
-                <CIcon className="icon icon-sm" icon={visible ? cilMinus : cilPlus} />
-                            </span></>)}>
-                    <CNavItem href="#">Item</CNavItem>
-                    <CNavItem href="#">Item</CNavItem>
-                    <CNavGroup
-                        toggler={({ visible }) => (
-                            <>
-                <span className="nav-icon">
-                  <span className="nav-icon-bullet"></span>
-                </span>{' '}
-                                Nested group
-                                <span className="nav-group-toggle-indicator">
-                  <CIcon className="icon icon-sm" icon={visible ? cilMinus : cilPlus} />
-                </span>
-                            </>
-                        )}
-                    >
-                        <CNavItem href="#">Item</CNavItem>
-                        <CNavItem href="#">Item</CNavItem>
-                    </CNavGroup>
-                </CNavGroup>
+                {/* Reservations */}
+                <CNavItem as="div">
+                    <CNavLink
+                        onClick={() => navigate("/reservations")}
+                        style={{cursor: "pointer"}}>
+                        <CIcon customClassName="nav-icon" icon={cilUser}/> Reservations
+                    </CNavLink>
+                </CNavItem>
 
                 {/* Coreui */}
                 <CNavItem href="https://coreui.io">
