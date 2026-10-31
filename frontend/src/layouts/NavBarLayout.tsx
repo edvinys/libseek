@@ -19,7 +19,7 @@ export default function NavBarLayout()
     }, []);
     return (
         <>
-            <NavBar />
+            <NavBar style={{borderBottom: "1px solid #e6e9f2", background: "radial-gradient(circle at 50% 40%, #eef0ff 0%, #ffffff 65%); min-height: 100vh"}} />
             <main>
                 <Outlet />
             </main>
