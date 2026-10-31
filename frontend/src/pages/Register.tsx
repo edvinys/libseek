@@ -8,7 +8,7 @@ export default function Register()
         gap: "40px",
         flexWrap: "wrap",
     }}>
-        <img src={registerImage} alt="butterfly"
+        <img src={registerImage} alt="books"
              height="500px"
              width="500px"
              style={{marginLeft: "300px", marginTop: "150px" }}></img>
