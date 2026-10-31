@@ -2,12 +2,13 @@ import Table from "react-bootstrap/Table"
 import ApiCaller from "../apiCall/ApiCaller.ts";
 import type Book from "../data/Book.ts";
 
-type BookTableProps = {
+export type BookTableProps = {
     books? : Book[];
     hidden? : boolean;
+    onClick? : (book : Book) => void;
 }
 
-export default function BookTable({books = [], hidden = false} : BookTableProps)
+export default function BookTable({books = [], hidden = false, onClick = undefined} : BookTableProps)
 {
     if (hidden)
         return <></>
@@ -25,7 +26,8 @@ export default function BookTable({books = [], hidden = false} : BookTableProps)
             <tbody>
             {books.map((book) =>
                 (
-                    <tr key={book.id}>
+                    <tr key={book.id}
+                        onClick={(e) => onClick ? onClick(book) : ""}>
                         <td>{book.id}</td>
                         <td>{book.title}</td>
                         <td>{book.genre}</td>
