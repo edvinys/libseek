@@ -3,6 +3,7 @@ using Library.Database;
 using Library.Records;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using System.Data.Common;
 
@@ -94,7 +95,7 @@ namespace Library.Controllers
             // filter by title
             if (!string.IsNullOrWhiteSpace(filters.Title))
             {
-                booksQuery = booksQuery.Where(book => book.Title.Equals(filters.Title));
+                booksQuery = booksQuery.Where(book => book.Title.ToLower().Contains(filters.Title.ToLower()));
 
                 if (!booksQuery.Any())
                 {
@@ -117,6 +118,29 @@ namespace Library.Controllers
                     authorSurname = author.Surname
                 }).ToList();
             return Ok(booksAndAuthor);
+        }
+
+        [HttpDelete("api/books")]
+        public async Task<IActionResult> DeleteBook(BookRecord bookRecord)
+        {
+            bool hasReservations = await DB.Reservations
+                .Where(reservation => reservation.Copy.BookId == bookRecord.ID)
+                .AnyAsync();
+
+            if (hasReservations)
+            {
+                return BadRequest(new
+                {
+                    message = "The requested book to delete still has its reservations."
+                });
+            }
+
+            Book book = new Book(bookRecord);
+
+            DB.Books.Remove(book);
+            await DB.SaveChangesAsync();
+
+            return Ok();
         }
     }
 }
