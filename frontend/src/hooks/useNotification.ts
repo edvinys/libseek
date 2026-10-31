@@ -1,14 +1,15 @@
 import { useState } from "react";
 
 export default function useNotification(): {
-    visible: boolean;
-    text: string;
+    notificationVisible: boolean;
+    notificationText: string;
     showNotification: (text: string, ms: number) => void; }
 {
     const [visible, setVisible] = useState(false);
     const [text, setText] = useState("");
 
-    const showNotification = (text: string, ms: number): void => {
+    const showNotification = (text: string, ms: number): void =>
+    {
         setVisible(true);
         setText(text);
         setTimeout(() => {
@@ -17,8 +18,8 @@ export default function useNotification(): {
     };
 
     return {
-        visible,
-        text,
+        notificationVisible: visible,
+        notificationText: text,
         showNotification
     };
 }
