@@ -4,13 +4,18 @@ import Navbar from 'react-bootstrap/Navbar';
 import {logout} from "../authentication/logout.ts";
 import {useNavigate} from "react-router-dom";
 import {NavDropdown} from "react-bootstrap";
+import type {CSSProperties} from "react";
 
-function NavBar()
+type NavBarLayoutProps = {
+    style?: CSSProperties;
+}
+
+function NavBar({style} : NavBarLayoutProps)
 {
     const navigate = useNavigate();
 
     return (
-        <Navbar expand="false" style={{backgroundColor: "aliceblue"}}>
+        <Navbar expand="false" style={style}>
             <Container>
                 <Navbar.Brand onClick={() => {navigate("")}}
                               style={{cursor: "pointer"}}>libseek</Navbar.Brand>
