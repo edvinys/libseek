@@ -2,7 +2,7 @@
 
 namespace Library.Data;
 
-public partial class Book
+public partial class Book : IEquatable<Book>
 {
     public int Id { get; set; }
 
@@ -18,7 +18,17 @@ public partial class Book
     }
     public Book(BookRecord bookRecord)
     {
+        Id = bookRecord.ID
+            ?? throw new ArgumentException("bookRecord did not have ID and was tried to be made in to a book object.");
         Title = bookRecord.Title;
         Genre = bookRecord.Genre;
+    }
+
+    public bool Equals(Book? other)
+    {
+        if (other is null)
+            return false;
+
+        return this.Id == other.Id;
     }
 }
