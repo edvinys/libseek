@@ -4,14 +4,14 @@ namespace Library.Records
 {
     public record BookRecord
     (
-        // Book
+        int? ID,
 
+        // Book
         [Required] string Title,
 
         [Required] string Genre,
 
         // Authors info
-
         [Required] string AuthorName,
 
         [Required] string AuthorSurname,
