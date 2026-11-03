@@ -7,6 +7,6 @@ namespace Library.Services
     {
         bool IsValidUser(UserLoginRecord userLoginRecord, out User? user);
         bool IsValidEmail(string email);
-        string GenerateToken(User? user);
+        string GenerateToken(User user);
     }
 }

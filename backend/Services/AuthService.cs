@@ -19,7 +19,7 @@ namespace Library.Services
             Configuration = configuration;
         }
 
-        public string GenerateToken(User? user)
+        public string GenerateToken(User user)
         {
             ArgumentNullException.ThrowIfNull(user);
 
