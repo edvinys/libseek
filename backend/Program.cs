@@ -25,6 +25,8 @@ builder.Services.AddStackExchangeRedisExtensions<SystemTextJsonSerializer>(new R
     ConnectionString = builder.Configuration["ConnectionStrings:Redis"]
     ?? throw new InvalidOperationException("Could not get Redis connection string"),
     ClientName = "libseek",
+    Name = "libseek",
+    Database = 2
 });
 
 builder.Services.AddHealthChecks()
@@ -118,7 +120,6 @@ builder.Services.AddAuthorization();
 //---- Build
 
 var app = builder.Build();
-
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
