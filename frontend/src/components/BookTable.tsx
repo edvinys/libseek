@@ -8,11 +8,10 @@ export type BookTableProps = {
     onClick? : (book : Book) => void;
 }
 
-export default function BookTable({books = [], hidden = false, onClick = undefined} : BookTableProps)
+export default function BookTable({books = [], hidden = books.length == 0, onClick = undefined} : BookTableProps)
 {
     if (hidden)
         return <></>
-
     return (
         <Table striped bordered hover>
             <thead>
@@ -27,7 +26,7 @@ export default function BookTable({books = [], hidden = false, onClick = undefin
             {books.map((book) =>
                 (
                     <tr key={book.id}
-                        onClick={(e) => onClick ? onClick(book) : ""}>
+                        onClick={(e) => onClick ? onClick(book) : undefined}>
                         <td>{book.id}</td>
                         <td>{book.title}</td>
                         <td>{book.genre}</td>
