@@ -1,8 +1,10 @@
 import Alert from 'react-bootstrap/Alert';
+import type {Variant} from "react-bootstrap/cjs/types";
 
 type InfoAlertProps = {
     text: string;
-    visible : boolean
+    visible : boolean;
+    variant? : Variant;
 }
 
 /**
@@ -13,10 +15,12 @@ type InfoAlertProps = {
  * @param param0.visible The visibility of the component.
  * @constructor
  */
-export default function InfoAlert({text, visible} : InfoAlertProps)
+
+export default function InfoAlert({text, visible, variant} : InfoAlertProps)
 {
     return (
-        <Alert variant="info" show={visible} transition>
+        <Alert variant={variant} show={visible} transition
+               style={{width:'20%', position:"fixed", bottom:"20px", right:"20px"}} >
             <Alert.Heading style={{fontSize: "20px"}}>{text}</Alert.Heading>
         </Alert>
     );
