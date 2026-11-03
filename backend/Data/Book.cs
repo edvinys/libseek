@@ -4,7 +4,7 @@ namespace Library.Data;
 
 public partial class Book : IEquatable<Book>
 {
-    public int Id { get; set; }
+    public int? Id { get; set; }
 
     public string Title { get; set; } = null!;
 
@@ -13,13 +13,10 @@ public partial class Book : IEquatable<Book>
     public int AuthorId { get; set; }
 
     public virtual ICollection<BookCopy> BookCopies { get; set; } = new List<BookCopy>();
-    public Book()
-    {
-    }
+    public Book() { }
     public Book(BookRecord bookRecord)
     {
-        Id = bookRecord.ID
-            ?? throw new ArgumentException("bookRecord did not have ID and was tried to be made in to a book object.");
+        Id = bookRecord.ID;
         Title = bookRecord.Title;
         Genre = bookRecord.Genre;
     }
@@ -27,6 +24,8 @@ public partial class Book : IEquatable<Book>
     public bool Equals(Book? other)
     {
         if (other is null)
+            return false;
+        if (other.Id == -1)
             return false;
 
         return this.Id == other.Id;
