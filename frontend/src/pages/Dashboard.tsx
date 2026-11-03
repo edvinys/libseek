@@ -10,7 +10,12 @@ export default function Dashboard()
 
     useEffect(() =>
     {
-        void ApiCaller.getBooks().then(setBooks);
+        async function getBooks(): Promise<void>
+        {
+            const books : Book[] = await ApiCaller.getBooks();
+            setBooks(books);
+        }
+        void getBooks();
     }, [])
 
     return(
