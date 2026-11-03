@@ -1,5 +1,4 @@
 import type Book from "../data/Book.ts";
-import {data} from "react-router-dom";
 import UserInfo from "../data/UserInfo.ts";
 
 export default class ApiCaller
@@ -36,8 +35,7 @@ export default class ApiCaller
 
     static async authenticate() : Promise<Response>
     {
-        const response : Response = await fetch
-        (
+        const response : Response = await fetch(
             this.urlForApi + "api/login/auth",
             {
                 method: "POST",
@@ -82,8 +80,7 @@ export default class ApiCaller
     }
     static async getEmailNameSurname() : Promise<UserInfo | null>
     {
-        const response: Response = await fetch
-        (
+        const response: Response = await fetch(
             this.urlForApi + "api/user",
             {
                 method: "GET",
@@ -92,8 +89,7 @@ export default class ApiCaller
         )
         if (response.status == 200)
         {
-            let userInfo : UserInfo = await response.json();
-            return userInfo;
+            return await response.json();
         }
         if (response.status == 401)
         {
@@ -101,7 +97,6 @@ export default class ApiCaller
         }
         if (response.status == 404)
         {
-            //
             console.log("User wasn't found in database when fetching getEmailNameSurname");
         }
         return null;
@@ -121,7 +116,7 @@ export default class ApiCaller
         console.log("Successfully retrieved books")
         return await response.json();
     }
-    static async getBook(title : string ) : Promise<Book | null>
+    static async getBook(title : string ) : Promise<Book[] | null>
     {
         console.log(`Retrieving book by title: ${title}...`)
 
@@ -136,7 +131,7 @@ export default class ApiCaller
 
         if (response.ok)
         {
-            return response.json();
+            return await response.json();
         }
         else
         {
@@ -162,12 +157,11 @@ export default class ApiCaller
                 else
                 {
                     dataString =
-                        book.authorBirthDate?.getFullYear() + "-" +
+                        book.authorBirthDate?.getFullYear() + "-" + "0" +
                         (book.authorBirthDate?.getMonth() + 1) + "-" +
                         book.authorBirthDate?.getDate();
                 }
             }
-
 
             let bookRecord  =
             {
@@ -216,5 +210,38 @@ export default class ApiCaller
             console.log("It is likely that the server is offline.");
             return false;
         }
+    }
+    static async removeBook(book : Book) : Promise<boolean>
+    {
+       try
+       {
+           console.log("Trying to remove book: " + book.title + " with id: " + book.id);
+
+           const json : string = JSON.stringify(book);
+           const response : Response = await fetch(
+               this.urlForApi + `api/books`,
+               {
+                   method: "DELETE",
+                   credentials: "include",
+                   headers:
+                       {
+                           "Content-Type": "application/json",
+                       },
+                   body: json
+               }
+           )
+
+           if (response.ok)
+           {
+               console.log("Successfully removed book: " + book.title);
+               return true;
+           }
+       }
+       catch(e)
+       {
+           console.log("Error trying to remove book: " + book.title);
+       }
+
+       return false;
     }
 }
