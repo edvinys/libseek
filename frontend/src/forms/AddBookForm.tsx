@@ -6,13 +6,18 @@ import type Book from "../data/Book.ts";
 import ApiCaller from "../apiCall/ApiCaller.ts";
 import "react-bootstrap/"
 import DateRange from "../components/DateRange.tsx";
+import useNotification from "../hooks/useNotification.ts";
+import {data} from "react-router-dom";
+import InfoAlert from "../components/InfoAlert.tsx";
+import type {Variant} from "react-bootstrap/cjs/types";
 
 export default function AddBookForm()
 {
     const [validated, setValidated] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [date, setDate] = useState<Date | null>(null);
-
+    const {notificationVisible, showNotification, notificationText} = useNotification();
+    const [notificationVariant, setNotificationVariant] = useState<Variant>("");
 
     const handleSubmit = (event : SubmitEvent<HTMLFormElement>) : void =>
     {
@@ -24,27 +29,39 @@ export default function AddBookForm()
             return;
         }
 
+        setValidated(true);
+
         // try to add book
         setIsLoading(true);
         const data = new FormData(form);
         const book : Book =
         {
-            id: "-1",
+            id: null,
             title: String(data.get("bookTitle") ?? ""),
             genre: String(data.get("bookGenre") ?? ""),
             authorName : String(data.get("authorName") ?? ""),
             authorSurname : String(data.get("authorSurname") ?? ""),
             authorBirthDate : date
         }
+        void tryAddBook();
 
         async function tryAddBook(): Promise<void>
         {
             const success : boolean = await ApiCaller.addBook(book);
-            setIsLoading(false);
-            setValidated(true);
-        }
+            if (success)
+            {
+                setNotificationVariant("success");
+                showNotification("Successfully added", 1500);
+                setIsLoading(false);
+            }
+            else
+            {
+                setNotificationVariant("warning");
+                showNotification("There was an error.", 1500);
+                setIsLoading(false);
+            }
 
-        void tryAddBook();
+        }
     }
     return (
         <>
@@ -96,6 +113,8 @@ export default function AddBookForm()
                         className={"mb-3 d-block mx-auto"}
                         disabled={isLoading}>{isLoading ? "Loading..." : "Add book"}</Button>
             </Form>
+            {/* Notification */}
+            <InfoAlert text={notificationText} visible={notificationVisible}></InfoAlert>
         </>
     );
 }
