@@ -1,11 +1,11 @@
 export default class Book
 {
-    public id : string;
+    public id : string | null = null;
     public title : string;
     public genre : string;
     public authorName : string;
     public authorSurname : string;
-    public authorBirthDate? : Date | null;
+    public authorBirthDate? : Date | null = null;
 
     constructor(id : string, title : string, genre : string, authorSurname : string, authorBirthDate : Date | null = null)
     {
