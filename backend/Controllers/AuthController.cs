@@ -11,7 +11,7 @@ using System.Net.Mail;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace Library.Controllers.Authentication
+namespace Library.Controllers
 {
     [ApiController]
     public class AuthController : ControllerBase
@@ -63,7 +63,7 @@ namespace Library.Controllers.Authentication
                 {
                     HttpOnly = true, // prevent JS from reading
                     Secure = true, // only https
-                    SameSite = Microsoft.AspNetCore.Http.SameSiteMode.None, // prevent attacks
+                    SameSite = SameSiteMode.None, // prevent attacks
                     Expires = DateTime.Now.AddMinutes(90),
                     IsEssential = true,
                 };
@@ -88,7 +88,7 @@ namespace Library.Controllers.Authentication
             {
                 HttpOnly = true, // prevent JS from reading
                 Secure = true, // only https
-                SameSite = Microsoft.AspNetCore.Http.SameSiteMode.None, // prevent attacks
+                SameSite = SameSiteMode.None, // prevent attacks
                 IsEssential = true,
             };
             Response.Cookies.Delete("sid", cookieOptions);
