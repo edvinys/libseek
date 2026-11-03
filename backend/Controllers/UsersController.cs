@@ -20,7 +20,7 @@ namespace Library.Controllers
         }
 
         [HttpPost("api/user/register")]
-        public async Task<IActionResult> PutUsersInDB(UserRecord userRecord)
+        public async Task<IActionResult> AddUserToDB(UserRecord userRecord)
         {
             bool emailExists = await DB.Users.Where(user => user.Email.ToLower() == userRecord.Email.ToLower()).AnyAsync();
 
@@ -64,9 +64,9 @@ namespace Library.Controllers
 
             return Ok(new
             {
-                Name = user.Name,
-                Email = user.Email,
-                Surname = user.Surname
+                user.Name,
+                user.Email,
+                user.Surname
             });
         }
     }
