@@ -4,8 +4,8 @@ namespace Library.Records
 {
     public record UserRecord
     (
-        [StringLength(50), Required] string Name,
-        [StringLength(50), Required] string Surname,
+        [Required] string Name,
+        [Required] string Surname,
         [StringLength(50), Required] string Email,
         [StringLength(50), Required] string Password
     );
