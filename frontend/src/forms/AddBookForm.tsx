@@ -24,6 +24,7 @@ export default function AddBookForm()
         // validity logic
         const form = event.currentTarget;
         event.preventDefault();
+        setValidated(true);
         if (!form.checkValidity())
         {
             return;
@@ -69,7 +70,7 @@ export default function AddBookForm()
 
                 {/* Book title */}
 
-                <Form.FloatingLabel controlId="floatingInput" label="Book title*" className="mb-3">
+                <Form.FloatingLabel controlId="bookTitle" label="Book title*" className="mb-3">
                     <Form.Control name="bookTitle" type="text" placeholder="The Glass Bridge at Midnight" required />
                     <Form.Control.Feedback type="invalid">
                         Please enter a book title.
@@ -78,7 +79,7 @@ export default function AddBookForm()
 
                 {/* Book genre */}
 
-                <Form.FloatingLabel controlId="floatingInput" label="Book genre*" className="mb-3">
+                <Form.FloatingLabel controlId="bookGenre" label="Book genre*" className="mb-3">
                     <Form.Control name="bookGenre" type="text" placeholder="Drama" required />
                     <Form.Control.Feedback type="invalid">
                         Please enter a book genre.
@@ -87,7 +88,7 @@ export default function AddBookForm()
 
                 {/* Author name */}
 
-                <Form.FloatingLabel controlId="floatingInput" label="Author name*" className="mb-3">
+                <Form.FloatingLabel controlId="authorName" label="Author name*" className="mb-3">
                     <Form.Control name="authorName" type="text" placeholder="Drama" required/>
                     <Form.Control.Feedback type="invalid">
                         Please enter the authors name.
@@ -96,7 +97,7 @@ export default function AddBookForm()
 
                 {/* Author surname */}
 
-                <Form.FloatingLabel controlId="floatingInput" label="Author surname*" className="mb-3">
+                <Form.FloatingLabel controlId="authorSurname" label="Author surname*" className="mb-3">
                     <Form.Control name="authorSurname" type="text" placeholder="Drama" required/>
                     <Form.Control.Feedback type="invalid">
                         Please enter the authors surname.
@@ -114,7 +115,7 @@ export default function AddBookForm()
                         disabled={isLoading}>{isLoading ? "Loading..." : "Add book"}</Button>
             </Form>
             {/* Notification */}
-            <InfoAlert text={notificationText} visible={notificationVisible}></InfoAlert>
+            <InfoAlert text={notificationText} visible={notificationVisible} variant={notificationVariant} />
         </>
     );
 }
