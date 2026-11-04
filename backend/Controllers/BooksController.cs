@@ -114,7 +114,7 @@ namespace Library.Controllers
             {
                 IEnumerable<BookRecord> books = await RedisDB.SetMembersAsync<BookRecord>(redisKey);
                 books.ToArray();
-                if (books.Count() > 0)
+                if (books.Count() > 0 && books.Count() == DB.Books.Count())
                 {
                     return Ok(books);
                 }
