@@ -3,10 +3,11 @@ import {useState} from "react"; // https://reactdatepicker.com/
 import "react-datepicker/dist/react-datepicker.css";
 
 type onDataChangeProp = {
+    hidden? : boolean;
     onDateChange?: (date: Date | null) => void;
 }
 
-export default function DateRange({onDateChange} : onDataChangeProp)
+export default function DateRange({hidden = false, onDateChange} : onDataChangeProp)
 {
     const [selectedDate, setSelectedDate] = useState<Date | null>(null);
 
