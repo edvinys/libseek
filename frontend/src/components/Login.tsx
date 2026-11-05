@@ -13,6 +13,51 @@ export default function Login()
     const urlIfAuthorized : string = "/dashboard";
     const navigate = useNavigate();
 
+    async function handleLogin() : Promise<void>
+    {
+        setButtonDisabled(true);
+        setMessageColor("grey");
+        if (email == "" && password == "")
+        {
+            setMessage("Please enter a valid email address and password.");
+            setButtonDisabled(false);
+        }
+
+        else if (email == "")
+        {
+            setMessage("Please enter a valid email");
+            setButtonDisabled(false);
+        }
+        else if (password == "")
+        {
+            setMessage("Please enter your password");
+            setButtonDisabled(false);
+        }
+        else
+        {
+            setMessageColor("gray");
+            setMessage("...");
+            const loginResponse : Response = await login(email, password);
+            setTimeout(async () =>
+            {
+                if (loginResponse.status == 200)
+                {
+                    console.log("Ok");
+                    setMessageColor("green");
+                    setMessage("Login successful");
+                    navigate(urlIfAuthorized, {replace : true});
+                }
+                else if (!loginResponse.ok)
+                {
+                    console.log("Unauthorized");
+                    setMessageColor("darkred")
+                    setMessage("Email or password is incorrect");
+                }
+                setButtonDisabled(false);
+            }, 200)
+        }
+    }
+
     return (
         <div title="login form">
         <h3 className="text-center">Log in</h3>
@@ -55,49 +100,4 @@ export default function Login()
         </form>
     </div>
     )
-
-    async function handleLogin() : Promise<void>
-    {
-        setButtonDisabled(true);
-        setMessageColor("grey");
-        if (email == "" && password == "")
-        {
-            setMessage("Please enter a valid email address and password.");
-            setButtonDisabled(false);
-        }
-
-        else if (email == "")
-        {
-            setMessage("Please enter a valid email");
-            setButtonDisabled(false);
-        }
-        else if (password == "")
-        {
-            setMessage("Please enter your password");
-            setButtonDisabled(false);
-        }
-        else
-        {
-            setMessageColor("gray");
-            setMessage("...");
-            const loginResponse : Response = await login(email, password);
-            setTimeout(async () =>
-            {
-                if (loginResponse.status == 401)
-                {
-                    console.log("Unauthorized");
-                    setMessageColor("darkred")
-                    setMessage("Email or password is incorrect");
-                }
-                if (loginResponse.status == 200)
-                {
-                    console.log("Ok");
-                    setMessageColor("green");
-                    setMessage("Login successful");
-                    navigate(urlIfAuthorized, {replace : true});
-                }
-                setButtonDisabled(false);
-            }, 200)
-        }
-    }
 }
