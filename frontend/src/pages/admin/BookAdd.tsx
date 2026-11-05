@@ -1,10 +1,10 @@
-import PencilCard from "../components/PencilCard.tsx";
-import BookTable from "../components/BookTable.tsx";
-import SearchBarButton from "../components/SearchBarButton.tsx";
-import type Book from "../data/Book.ts";
-import ApiCaller from "../apiCall/ApiCaller.ts";
+import PencilCard from "../../components/PencilCard.tsx";
+import BookTable from "../../components/BookTable.tsx";
+import SearchBarButton from "../../components/SearchBarButton.tsx";
+import type Book from "../../data/Book.ts";
+import ApiCaller from "../../apiCall/ApiCaller.ts";
 import {useEffect, useState} from "react";
-import AddBookForm from "../forms/AddBookForm.tsx";
+import AddBookForm from "../../forms/admin/AddBookForm.tsx";
 
 export default function BookAdd()
 {

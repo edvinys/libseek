@@ -1,13 +1,13 @@
-import BookTable from "../components/BookTable.tsx";
-import SearchBarButton from "../components/SearchBarButton.tsx";
+import BookTable from "../../components/BookTable.tsx";
+import SearchBarButton from "../../components/SearchBarButton.tsx";
 import {useEffect, useState} from "react";
-import type Book from "../data/Book.ts";
-import ApiCaller from "../apiCall/ApiCaller.ts";
-import InfoAlert from "../components/InfoAlert.tsx";
-import useNotification from "../hooks/useNotification.ts";
+import type Book from "../../data/Book.ts";
+import ApiCaller from "../../apiCall/ApiCaller.ts";
+import InfoAlert from "../../components/InfoAlert.tsx";
+import useNotification from "../../hooks/useNotification.ts";
 import type {Variant} from "react-bootstrap/cjs/types";
 import Form from 'react-bootstrap/Form'
-import Author from "../data/Author.ts";
+import Author from "../../data/Author.ts";
 
 export default function BookRemove()
 {
@@ -42,12 +42,16 @@ export default function BookRemove()
                         const [removed, message] = await ApiCaller.removeAuthor(author);
                         if (removed)
                         {
-                            setNotificationVariant("success");
-                            showNotification("Removed", 1500);
+                            SuccessfullyRemoved();
                             return;
                         }
                         outerMessage = message;
                     }
+                }
+                else
+                {
+                    SuccessfullyRemoved();
+                    return;
                 }
                 setNotificationVariant("light");
                 showNotification("Removed book, but author wasn't able to be removed. " + outerMessage, 1500);
@@ -57,6 +61,11 @@ export default function BookRemove()
                 showNotification("Failed to Remove", 1500);
             }
 
+            function SuccessfullyRemoved() : void
+            {
+                setNotificationVariant("success");
+                showNotification("Removed", 1500);
+            }
         }
 
 
