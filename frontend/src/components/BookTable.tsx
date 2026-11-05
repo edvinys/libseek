@@ -30,7 +30,7 @@ export default function BookTable({books = [], hidden = books.length == 0, onCli
                         <td>{book.id}</td>
                         <td>{book.title}</td>
                         <td>{book.genre}</td>
-                        <td>{book.authorName + book.authorSurname}</td>
+                        <td>{book.authorName + " " + book.authorSurname}</td>
                     </tr>
                 ))}
             </tbody>
