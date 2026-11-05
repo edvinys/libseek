@@ -1,15 +1,14 @@
-import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import Form from 'react-bootstrap/Form';
 import {Button, InputGroup} from "react-bootstrap";
 import {type SubmitEvent, useState} from "react";
-import type Book from "../data/Book.ts";
-import ApiCaller from "../apiCall/ApiCaller.ts";
+import type Book from "../../data/Book.ts";
+import ApiCaller from "../../apiCall/ApiCaller.ts";
 import "react-bootstrap/"
-import DateRange from "../components/DateRange.tsx";
-import useNotification from "../hooks/useNotification.ts";
-import {data} from "react-router-dom";
-import InfoAlert from "../components/InfoAlert.tsx";
+import DateRange from "../../components/DateRange.tsx";
+import useNotification from "../../hooks/useNotification.ts";
+import InfoAlert from "../../components/InfoAlert.tsx";
 import type {Variant} from "react-bootstrap/cjs/types";
+import AppForm from "../../components/AppForm.tsx";
 
 export default function AddBookForm()
 {
@@ -29,8 +28,6 @@ export default function AddBookForm()
         {
             return;
         }
-
-        setValidated(true);
 
         // try to add book
         setIsLoading(true);
@@ -61,60 +58,36 @@ export default function AddBookForm()
                 showNotification("There was an error.", 1500);
                 setIsLoading(false);
             }
-
         }
     }
     return (
         <>
-            <Form className="mb-3" noValidate validated={validated} onSubmit={handleSubmit}>
-
-                {/* Book title */}
-
-                <Form.FloatingLabel controlId="bookTitle" label="Book title*" className="mb-3">
-                    <Form.Control name="bookTitle" type="text" placeholder="The Glass Bridge at Midnight" required />
-                    <Form.Control.Feedback type="invalid">
-                        Please enter a book title.
-                    </Form.Control.Feedback>
-                </Form.FloatingLabel>
-
-                {/* Book genre */}
-
-                <Form.FloatingLabel controlId="bookGenre" label="Book genre*" className="mb-3">
-                    <Form.Control name="bookGenre" type="text" placeholder="Drama" required />
-                    <Form.Control.Feedback type="invalid">
-                        Please enter a book genre.
-                    </Form.Control.Feedback>
-                </Form.FloatingLabel>
-
-                {/* Author name */}
-
-                <Form.FloatingLabel controlId="authorName" label="Author name*" className="mb-3">
-                    <Form.Control name="authorName" type="text" placeholder="Drama" required/>
-                    <Form.Control.Feedback type="invalid">
-                        Please enter the authors name.
-                    </Form.Control.Feedback>
-                </Form.FloatingLabel>
-
-                {/* Author surname */}
-
-                <Form.FloatingLabel controlId="authorSurname" label="Author surname*" className="mb-3">
-                    <Form.Control name="authorSurname" type="text" placeholder="Drama" required/>
-                    <Form.Control.Feedback type="invalid">
-                        Please enter the authors surname.
-                    </Form.Control.Feedback>
-                </Form.FloatingLabel>
-
-                {/* Author birthdate */}
-
-                <DateRange onDateChange={(date) => {setDate(date)}} />
-
-                {/* Button */}
-                <Button type="submit"
-                        variant="outline-primary"
-                        className={"mb-3 d-block mx-auto"}
-                        disabled={isLoading}>{isLoading ? "Loading..." : "Add book"}</Button>
-            </Form>
-            {/* Notification */}
+            <AppForm onSubmit={handleSubmit}
+                     validated={validated}
+                     buttonLabel="Add book"
+                     isLoading={isLoading}
+                     hideDateRange={false}
+                     onDateChange={(date : Date | null) => {setDate(date)}}>
+                <AppForm.Check
+                    label="Book title"
+                    id="bookTitle"
+                    feedback="Please enter a book title."
+                    required={true}
+                    placeholder="The Glass Bridge at Midnight"/>
+                <AppForm.Check label="Book genre"
+                               id="bookGenre"
+                               feedback={"Please enter a book genre."}
+                               required={true}
+                               placeholder="Drama"/>
+                <AppForm.Check label="Author name"
+                               id="authorName"
+                               required={false}
+                               placeholder={"John"} />
+                <AppForm.Check label="Author surname"
+                               id="authorSurname"
+                               required={false}
+                               placeholder={"Doe"} />
+            </AppForm>
             <InfoAlert text={notificationText} visible={notificationVisible} variant={notificationVariant} />
         </>
     );
