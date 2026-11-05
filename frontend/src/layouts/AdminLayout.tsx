@@ -4,7 +4,7 @@ import {LoadingSpinner} from "../components/LoadingSpinner.tsx";
 import {type NavigateFunction, Outlet, useNavigate} from "react-router-dom";
 import {SideBar} from "../components/SideBar.tsx";
 
-export default function SideBarLayout()
+export default function AdminLayout()
 {
     const[isLoading, setIsLoading] = useState<boolean>(true);
     let navigate : NavigateFunction = useNavigate();

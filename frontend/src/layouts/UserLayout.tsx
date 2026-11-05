@@ -3,7 +3,7 @@ import {Outlet, useNavigate} from "react-router-dom";
 import {useEffect} from "react";
 import ApiCaller from "../apiCall/ApiCaller.ts";
 
-export default function NavBarLayout()
+export default function UserLayout()
 {
     const navigate = useNavigate();
 
