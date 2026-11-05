@@ -4,7 +4,7 @@ import {LoadingSpinner} from "../components/LoadingSpinner.tsx";
 import {type NavigateFunction, Outlet, useNavigate} from "react-router-dom";
 import {SideBar} from "../components/SideBar.tsx";
 
-export default function LoadingLayout()
+export default function SideBarLayout()
 {
     const[isLoading, setIsLoading] = useState<boolean>(true);
     let navigate : NavigateFunction = useNavigate();
@@ -17,7 +17,7 @@ export default function LoadingLayout()
             if (!response.ok)
                 navigate("/", {replace : true})
 
-            setTimeout(() => {setIsLoading(!response.ok);}, 2000);
+            setTimeout(() => {setIsLoading(!response.ok);}, 500);
         }
         void isAuthenticated()
     }, []);
