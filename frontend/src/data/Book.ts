@@ -5,7 +5,7 @@ export default class Book
     public genre : string;
     public authorName : string;
     public authorSurname : string;
-    public authorBirthDate? : Date | null = null;
+    public authorBirthDate : Date | null = null;
 
     constructor(id : string, title : string, genre : string, authorSurname : string, authorBirthDate : Date | null = null)
     {
