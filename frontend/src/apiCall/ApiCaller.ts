@@ -1,5 +1,7 @@
 import type Book from "../data/Book.ts";
 import UserInfo from "../data/UserInfo.ts";
+import type Author from "../data/Author.ts";
+import mappers from "../apiCall/mappers.ts";
 
 export default class ApiCaller
 {
@@ -8,30 +10,6 @@ export default class ApiCaller
     private static authorizedUrl : string = "http://localhost:5173/dashboard"
 
     private constructor() {}
-
-    private static checkCommonStatuses(response : Response | null) : boolean
-    {
-        const isBaseUrl : boolean = document.baseURI == this.urlForWebsite;
-
-        if (response == null)
-        {
-            return false;
-        }
-        if (response.status == 202)
-        {
-            console.log("User is authenticated.")
-            return true;
-        }
-        else if (response.status == 401)
-        {
-            console.log("User is unauthenticated.");
-        }
-        else
-        {
-            console.log("Server error: unable to connect/unknown error");
-        }
-        return false;
-    }
 
     static async authenticate() : Promise<Response>
     {
@@ -143,25 +121,7 @@ export default class ApiCaller
         try
         {
             console.log("Trying to add book: " + book.title);
-            let dataString : string | undefined = undefined;
-
-            if (book.authorBirthDate)
-            {
-                if (book.authorBirthDate?.getMonth() + 1 > 10)
-                {
-                    dataString =
-                        book.authorBirthDate?.getFullYear() + "-" +
-                        (book.authorBirthDate?.getMonth() + 1) + "-" +
-                        book.authorBirthDate?.getDate();
-                }
-                else
-                {
-                    dataString =
-                        book.authorBirthDate?.getFullYear() + "-" + "0" +
-                        (book.authorBirthDate?.getMonth() + 1) + "-" +
-                        book.authorBirthDate?.getDate();
-                }
-            }
+            let dataString : string | null = mappers.dateFromTypeScriptToCSharp(book.authorBirthDate);
 
             let bookRecord  =
             {
@@ -169,7 +129,7 @@ export default class ApiCaller
                 Genre: book.genre,
                 AuthorName: book.authorName,
                 AuthorSurname: book.authorSurname,
-                authorBirthDate: dataString ? dataString : null,
+                authorBirthDate: dataString,
             }
 
             const json: string = JSON.stringify(bookRecord);
@@ -244,4 +204,36 @@ export default class ApiCaller
 
        return false;
     }
+    static async removeAuthor(author : Author) : Promise<[boolean, string]>
+    {
+        try
+        {
+            console.log("Trying to remove author: " + author.name + author.surname);
+
+            const json : string = JSON.stringify(author);
+            const response : Response = await fetch(
+                this.urlForApi + `api/authors`,
+                {
+                    method: "DELETE",
+                    credentials: "include",
+                    body: json
+                }
+            )
+            if (response.ok)
+            {
+                return [true, ""];
+            }
+            else
+            {
+                return [false, await response.text()];
+            }
+        }
+        catch (e)
+        {
+            console.log("Error trying to remove author: " + author.name + author.surname);
+            console.log("It is likely that the server is offline.");
+        }
+        return [false, "It is likely that the server is offline."];
+    }
+
 }
