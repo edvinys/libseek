@@ -39,7 +39,7 @@ type AppFormProps =
 }
 
 export default function AppForm({children, onSubmit, validated, buttonLabel,
-                                    isLoading, hideDateRange = false, onDateChange}: AppFormProps)
+                                    isLoading, hideDateRange = true, onDateChange}: AppFormProps)
 {
     Children.forEach(children, (child : ReactNode ) =>
     {
