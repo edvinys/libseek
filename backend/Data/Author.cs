@@ -14,19 +14,24 @@ public partial class Author
 
     public virtual ICollection<Book> Books { get; set; } = new List<Book>();
 
-    public Author()
+    public Author() {}
+
+    public Author(AuthorRecord authorRecord)
     {
+        Name = authorRecord.Name;
+        Surname = authorRecord.Surname;
+        Birthdate = authorRecord.Birthdate
+            ?? throw new ArgumentException($"Given author birthdate is null:" +
+                $" {authorRecord.Name} {authorRecord.Surname}");
 
     }
     public Author(BookRecord bookRecord)
     {
         Name = bookRecord.AuthorName;
         Surname = bookRecord.AuthorSurname;
-        if (bookRecord.AuthorBirthdate == null)
-        {
-            throw new ArgumentException($"Given author birthdate is null:" +
+        Birthdate = bookRecord.AuthorBirthdate
+            ?? throw new ArgumentException($"Given author birthdate is null:" +
                 $" {bookRecord.AuthorName} {bookRecord.AuthorSurname}");
-        }
-        Birthdate = bookRecord.AuthorBirthdate;
     }
+
 }
