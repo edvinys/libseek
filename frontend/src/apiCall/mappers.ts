@@ -1,9 +1,19 @@
+import type Author from "../data/Author.ts";
+
+interface AuthorDto
+{
+    name : string;
+    surname : string;
+    birthdate : string | null;
+}
+
 export default class mappers
 {
     private constructor(){}
 
+
     /**
-     * Converts a TypeScript date to a C# DateOnly parsable string. Returns null if received null.
+     * Converts a TypeScript Date to a C# DateOnly parsable string. Returns null if received null.
      * @param typeScriptDate The TypeScript date to convert.
      */
 
@@ -39,6 +49,23 @@ export default class mappers
                 typeScriptDate.getDate();
         }
 
-        return "";
+        return typeScriptDate.getFullYear() + "-" +
+            (typeScriptDate.getMonth() + 1) + "-" +
+            typeScriptDate.getDate();
+    }
+
+    /**
+     * Converts frontend Author object to backend-compatible Author object.
+     * Also called a Data transfer object.
+     * @param author The author to convert in to a Data transfer object.
+     */
+
+    static toAuthorDto(author : Author) : AuthorDto
+    {
+        return{
+            name: author.name,
+            surname : author.surname,
+            birthdate : mappers.dateFromTypeScriptToCSharp(author.birthdate)
+        }
     }
 }
