@@ -100,6 +100,26 @@ export const SideBar = () =>
                     </CNavLink>
                 </CNavGroup>
 
+                {/* Authors */}
+                <CNavGroup
+                    toggler={({ visible }) => (
+                        <>
+                            <CIcon customClassName="nav-icon" icon={cilUser} /> Authors
+                            <span className="nav-group-toggle-indicator">
+                <CIcon className="icon icon-sm" icon={visible ? cilMinus : cilPlus} />
+              </span></>)} compact visible>
+                    <CNavLink
+                        onClick={() => navigate("/author/add")}
+                        style={{cursor: "pointer", paddingLeft:"25px"}}>
+                        <CNavItem href="#">Add</CNavItem>
+                    </CNavLink>
+                    <CNavLink
+                        onClick={() => navigate("/author/remove")}
+                        style={{cursor: "pointer", paddingLeft:"25px"}}>
+                        <CNavItem href="#">Remove</CNavItem>
+                    </CNavLink>
+                </CNavGroup>
+
                 {/* Reservations */}
                 <CNavItem as="div">
                     <CNavLink
