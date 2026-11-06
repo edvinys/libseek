@@ -2,7 +2,7 @@ import BookTable from "../../components/BookTable.tsx";
 import SearchBarButton from "../../components/SearchBarButton.tsx";
 import {useEffect, useState} from "react";
 import type Book from "../../data/Book.ts";
-import ApiCaller from "../../apiCall/ApiCaller.ts";
+import ApiCaller, {type Result} from "../../apiCall/ApiCaller.ts";
 import InfoAlert from "../../components/InfoAlert.tsx";
 import useNotification from "../../hooks/useNotification.ts";
 import type {Variant} from "react-bootstrap/cjs/types";
@@ -39,13 +39,13 @@ export default function BookRemove()
                     {
                         const id : number = Number.parseInt(book.id);
                         const author : Author = new Author(id, book.authorName, book.authorSurname);
-                        const [removed, message] = await ApiCaller.removeAuthor(author);
-                        if (removed)
+                        const response : Result = await ApiCaller.removeAuthor(author);
+                        if (response.ok)
                         {
                             SuccessfullyRemoved();
                             return;
                         }
-                        outerMessage = message;
+                        outerMessage = response.error;
                     }
                 }
                 else
