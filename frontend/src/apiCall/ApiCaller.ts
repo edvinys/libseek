@@ -3,11 +3,14 @@ import UserInfo from "../data/UserInfo.ts";
 import type Author from "../data/Author.ts";
 import mappers from "../apiCall/mappers.ts";
 
+export type Result =
+    {ok: true} | {ok: false, error: string};
+
+// TO FIX: Remake returns with type Result.
+
 export default class ApiCaller
 {
     private static urlForApi : string = "https://localhost:7151/"
-    private static urlForWebsite : string = "http://localhost:5173/";
-    private static authorizedUrl : string = "http://localhost:5173/dashboard"
 
     private constructor() {}
 
@@ -204,36 +207,68 @@ export default class ApiCaller
 
        return false;
     }
-    static async removeAuthor(author : Author) : Promise<[boolean, string]>
+    static async addAuthor(author : Author) : Promise<Result>
     {
         try
         {
-            console.log("Trying to remove author: " + author.name + author.surname);
+            console.log("Trying to add author: " + author.name + " " + author.surname)
 
-            const json : string = JSON.stringify(author);
+            const json : string = JSON.stringify(mappers.toAuthorDto(author));
+
+            const response : Response = await fetch(
+                this.urlForApi + `api/authors`,
+                {
+                    method: "POST",
+                    credentials: "include",
+                    headers:
+                        {
+                            "Content-Type": "application/json",
+                        },
+                    body: json
+                }
+            )
+
+            if (response.ok)
+                return {ok: true}
+            else
+                return {ok: false, error:  await response.text()};
+        }
+        catch(e)
+        {
+            console.log("Error trying to remove author: " + author.name + author.surname);
+            console.log("It is likely that the server is offline.");
+        }
+        return {ok: false, error: "It is likely that the server is offline."}
+    }
+    static async removeAuthor(author : Author) : Promise<Result>
+    {
+        try
+        {
+            console.log("Trying to remove author: " + author.name + " " + author.surname);
+
+            const json : string = JSON.stringify(mappers.toAuthorDto(author));
             const response : Response = await fetch(
                 this.urlForApi + `api/authors`,
                 {
                     method: "DELETE",
                     credentials: "include",
+                    headers:
+                        {
+                            "Content-Type": "application/json",
+                        },
                     body: json
                 }
             )
             if (response.ok)
-            {
-                return [true, ""];
-            }
+                return {ok: true};
             else
-            {
-                return [false, await response.text()];
-            }
+                return {ok: false, error: await response.text()};
         }
         catch (e)
         {
             console.log("Error trying to remove author: " + author.name + author.surname);
-            console.log("It is likely that the server is offline.");
         }
-        return [false, "It is likely that the server is offline."];
+        return {ok: false, error: "It is likely that the server is offline."};
     }
 
 }
