@@ -19,7 +19,14 @@ export default function UserLayout()
     }, []);
     return (
         <>
-            <NavBar style={{borderBottom: "1px solid #e6e9f2", background: "radial-gradient(circle at 50% 40%, #eef0ff 0%, #ffffff 65%); min-height: 100vh"}} />
+            <NavBar
+                style={{
+                    background: "rgba(255, 255, 255, 0.5)",
+                    backdropFilter: "blur(12px)",
+                    WebkitBackdropFilter: "blur(12px)",
+                    borderBottom: "1px solid rgba(230, 233, 242, 0.6)",
+                }}
+            />
             <main>
                 <Outlet />
             </main>
