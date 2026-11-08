@@ -15,7 +15,72 @@
     flex-direction: column;
     justify-content: center;
     text-align: center;
+    background: rgba(255, 255, 255, 0.35);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-radius: 12px;
+    padding: 20px;
 }
+.form-control:focus {
+    border-color: #E6A15C;
+    box-shadow: 0 0 0 0.1rem rgba(230, 161, 92, 0.1);
+}
+
 body {
-    background: radial-gradient(circle at 50% 40%, #eef0ff 0%, #ffffff 65%); min-height: 100vh;
+    background: #f7f8ff;
+    min-height: 100vh;
 }
+body::before,
+body::after {
+    content: "";
+    position: fixed;
+    z-index: -1;
+    border-radius: 50%;
+    filter: blur(120px);
+    opacity: 0.3;
+}
+
+body::before {
+    width: 500px;
+    height: 500px;
+    background: #0d4a43;
+    top: -150px;
+    left: -100px;
+}
+
+body::after {
+    width: 400px;
+    height: 400px;
+    background: #e8742a;
+    bottom: -120px;
+    right: -80px;
+}
+
+/* Button */
+
+.button-fill-green-border-orange
+{
+    background-color: #0F4C45;
+    border-color: #F26B3A;
+    border-width: 0px;
+}
+
+/* Spinning border */
+
+@property --a
+{
+    syntax: "<angle>";
+    initial-value: 0deg;
+    inherits: false;
+}
+
+@keyframes spin { to {--a: 360deg}}
+
+.spinning-border
+{
+    background:
+            linear-gradient(#fff, #fff) padding-box,
+            conic-gradient(from var(--a), red, yellow) border-box;
+    animation: spin 3s linear infinite;
+}
+
