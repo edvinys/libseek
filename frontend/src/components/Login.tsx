@@ -1,7 +1,7 @@
-import {type ReactNode, useEffect, useState} from "react";
+import {useState} from "react";
 import login from "../authentication/login"
 import {Link, useNavigate} from "react-router-dom";
-import ApiCaller from "../apiCall/ApiCaller.ts";
+import LoadingBouncingDots from "./LoadingBouncingDots.tsx";
 
 export default function Login()
 {
@@ -54,7 +54,7 @@ export default function Login()
                     setMessage("Email or password is incorrect");
                 }
                 setButtonDisabled(false);
-            }, 200)
+            }, 400)
         }
     }
 
@@ -89,14 +89,19 @@ export default function Login()
             <div className="d-flex justify-content-between align-items-center">
                 <button
                     type="submit"
-                    className="btn btn-primary"
+                    className="btn btn-primary btn-ghost"
                     id="submitButton"
-                    disabled={buttonDisabled}>Submit</button>
-                <Link to={"/forgot/password"} className="fw-bold">Forgot password?</Link>
+                    disabled={buttonDisabled}
+                style={{backgroundColor: "#0F4C45", borderColor: "#F26B3A", borderWidth:"0px"}}>Log in</button>
+                <Link to={"/forgot/password"} className="fw-bold" style={{color: "#126b62"}}>Forgot password?</Link>
             </div>
-            <p id="loginMessage" style={{textAlign: "center", color:messageColor, padding:"10px"}}>{message}</p>
+            <p id="loginMessage" style={{textAlign: "center", color:messageColor, padding:"10px"}}
+               hidden={buttonDisabled}>{message}</p>
+            <div style={{display:"flex", justifyContent:"center"}} hidden={!buttonDisabled}>
+                <LoadingBouncingDots />
+            </div>
             <p className="small fw-bold mt-2 pt-1 mb-0 text-center">Don't have an account? {" "}
-                <Link to={"/register"}>Register</Link></p>
+                <Link to={"/register"} style={{color: "#126b62"}}>Register</Link></p>
         </form>
     </div>
     )
