@@ -1,39 +1,36 @@
-import Table from "react-bootstrap/Table"
-import ApiCaller from "../apiCall/ApiCaller.ts";
 import type Book from "../data/Book.ts";
+import type {JSX} from "react";
+import AppTable from "./AppTable.tsx";
 
 export type BookTableProps = {
-    books? : Book[];
+    books : Book[];
     hidden? : boolean;
     onClick? : (book : Book) => void;
 }
 
+function mapValues(books : Book[], onClick? : (book : Book) => void) : JSX.Element[]
+{
+    return books.map((book) : JSX.Element =>
+        (
+            <tr key={book.id}
+                onClick={(e) => onClick ? onClick(book) : undefined}>
+                <td >{book.id}</td>
+                <td>{book.title}</td>
+                <td>{book.genre}</td>
+                <td>{book.authorName + " " + book.authorSurname}</td>
+            </tr>
+        ))
+}
+function headers() : JSX.Element[]
+{
+    return [
+        <th>ID</th>,
+        <th>Title</th>,
+        <th>Genre</th>,
+        <th>Author</th>];
+}
+
 export default function BookTable({books = [], hidden = books.length == 0, onClick = undefined} : BookTableProps)
 {
-    if (hidden)
-        return <></>
-    return (
-        <Table striped bordered hover>
-            <thead>
-            <tr>
-                <th>ID</th>
-                <th>Title</th>
-                <th>Genre</th>
-                <th>Author</th>
-            </tr>
-            </thead>
-            <tbody>
-            {books.map((book) =>
-                (
-                    <tr key={book.id}
-                        onClick={(e) => onClick ? onClick(book) : undefined}>
-                        <td>{book.id}</td>
-                        <td>{book.title}</td>
-                        <td>{book.genre}</td>
-                        <td>{book.authorName + " " + book.authorSurname}</td>
-                    </tr>
-                ))}
-            </tbody>
-        </Table>
-    )
+    return <AppTable values={books} headers={headers()} mappedValues={mapValues(books, onClick)} />
 }
