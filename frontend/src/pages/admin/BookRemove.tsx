@@ -48,7 +48,7 @@ export default function BookRemove()
             <h4 className="mb-4">Remove book</h4>
             <SearchBarButton onSearch={handleSearch} onBadInputs={() => setHideTable(true)}/>
             <div style={{width: "70%", marginTop: "20px"}} hidden={books.length == 0 || hideTable}>
-                <BookTable books={books}/>
+                <BookTable books={books} onClick={onClick}/>
                 <Form.Check type="checkbox" id="checkboxAuthor" style={{marginBottom: "20px"}}>
                     <Form.Check.Input type="checkbox" checked={removeAuthor}
                                       onChange={(e): void =>
