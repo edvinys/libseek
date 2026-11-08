@@ -38,7 +38,7 @@ import ApiCaller from "../apiCall/ApiCaller.ts";
 import UserInfo from "../data/UserInfo.ts";
 import {logout} from "../authentication/logout.ts"
 import {useNavigate} from "react-router-dom";
-import libseekLogo from "../assets/Libseek.svg"
+import libseekLogo from "../assets/libseek-wordmark-pine.svg"
 import githubLogo from "../assets/GitHub_logo.png"
 
 export const SideBar = () =>
@@ -63,8 +63,8 @@ export const SideBar = () =>
                 <CSidebarBrand>
                     <img
                         alt="Libseek logo"
-                        height="50"
-                        width="50"
+                        width="100px"
+                        height="auto"
                         src={libseekLogo}>
                     </img>
                 </CSidebarBrand>
