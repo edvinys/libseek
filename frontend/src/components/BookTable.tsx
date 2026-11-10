@@ -3,7 +3,7 @@ import type {JSX} from "react";
 import AppTable from "./AppTable.tsx";
 
 export type BookTableProps = {
-    books : Book[];
+    books : Book[] | Book;
     hidden? : boolean;
     onClick? : (book : Book) => void;
 }
@@ -30,7 +30,10 @@ function headers() : JSX.Element[]
         <th>Author</th>];
 }
 
-export default function BookTable({books = [], hidden = books.length == 0, onClick = undefined} : BookTableProps)
+export default function BookTable({books, onClick = undefined} : BookTableProps)
 {
+    if (!Array.isArray(books))
+        books = [books];
+
     return <AppTable values={books} headers={headers()} mappedValues={mapValues(books, onClick)} />
 }
