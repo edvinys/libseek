@@ -1,10 +1,10 @@
 import type Book from "../data/Book.ts";
 import UserInfo from "../data/UserInfo.ts";
-import type Author from "../data/Author.ts";
+import Author from "../data/Author.ts";
 import mappers from "../apiCall/mappers.ts";
 
-export type Result =
-    {ok: true} | {ok: false, error: string};
+export type Result<T> =
+    {ok: true, fetchResult? : T | T[]} | {ok: false, error: string};
 
 // TO FIX: Remake returns with type Result.
 
@@ -97,7 +97,7 @@ export default class ApiCaller
         console.log("Successfully retrieved books")
         return await response.json();
     }
-    static async getBook(title : string ) : Promise<Book[] | null>
+    static async getBooksByTitle(title : string ) : Promise<Book[] | null>
     {
         console.log(`Retrieving book by title: ${title}...`)
 
@@ -207,7 +207,7 @@ export default class ApiCaller
 
        return false;
     }
-    static async addAuthor(author : Author) : Promise<Result>
+    static async addAuthor(author : Author) : Promise<Result<Author>>
     {
         try
         {
@@ -240,7 +240,7 @@ export default class ApiCaller
         }
         return {ok: false, error: "It is likely that the server is offline."}
     }
-    static async removeAuthor(author : Author) : Promise<Result>
+    static async removeAuthor(author : Author) : Promise<Result<Author>>
     {
         try
         {
@@ -271,4 +271,29 @@ export default class ApiCaller
         return {ok: false, error: "It is likely that the server is offline."};
     }
 
+    static async getAuthorsByNameOrSurname(nameOrSurname : string) : Promise<Result<Author>>
+    {
+        try
+        {
+            console.log("Trying to get authors: " + nameOrSurname);
+
+            const response : Response = await fetch(
+                this.urlForApi + `api/authors?nameOrSurname=${nameOrSurname}`,
+                {
+                    method: "GET",
+                    credentials: "include",
+                }
+            )
+            if (response.ok)
+                return {ok: true, fetchResult: await response.json()};
+            else
+                return {ok: false, error: await response.text()};
+        }
+        catch(e)
+        {
+            console.log("Error trying to fetch author: " + nameOrSurname);
+        }
+
+        return {ok: false, error: "It is likely that the server is offline."};
+    }
 }
