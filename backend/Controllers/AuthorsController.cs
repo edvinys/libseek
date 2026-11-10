@@ -50,5 +50,18 @@ namespace Library.Controllers
             await DB.SaveChangesAsync();
             return Ok();
         }
+
+        [HttpGet("api/authors")]
+        public IActionResult GetAuthors([FromQuery] GetAuthorsQuery authorsQuery)
+        {
+            if (string.IsNullOrWhiteSpace(authorsQuery.NameOrSurname))
+                return BadRequest("The text was empty.");
+
+            List<Author> authors = 
+                DB.Authors.Where(author => author.Name.Contains(authorsQuery.NameOrSurname) ||
+                                           author.Surname.Contains(authorsQuery.NameOrSurname)).ToList();
+
+            return Ok(authors);
+        }
     }
 }
