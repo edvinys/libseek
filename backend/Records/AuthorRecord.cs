@@ -6,7 +6,7 @@ namespace Library.Records
     (
         int? Id,
         [Required] string Name,
-        [Required] string Surname,
+        string Surname,
         DateOnly? Birthdate
  
     );
