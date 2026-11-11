@@ -1,4 +1,4 @@
-export default class UserInfo
+export default class User
 {
     public email : string;
     public name : string;
