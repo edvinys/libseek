@@ -5,12 +5,12 @@ import {Children, isValidElement, type JSX, type ReactNode} from "react";
 
 export type AppTableProps<T> = {
     values : T[];
-    /** Should return a values.map() function, see example in where this function came from */
+    /** Should return mapped values including a `<tr key={...}> <td> {...} </td> </tr>` */
     /* Mapped values example:
             {books.map((book) : JSX.Element =>
                 (
                     <tr key={book.id}
-                        onClick={(e) => onClick ? onClick(book) : undefined}>
+                       onClick={(e) => onClick ? onClick(book) : undefined}>
                         <td>{book.id}</td>
                         <td>{book.title}</td>
                         <td>{book.genre}</td>

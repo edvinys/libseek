@@ -89,11 +89,10 @@ export default function Login()
             <div className="d-flex justify-content-between align-items-center">
                 <button
                     type="submit"
-                    className="btn btn-primary btn-ghost"
+                    className="btn btn-primary btn-ghost button-fill-green-border-orange"
                     id="submitButton"
-                    disabled={buttonDisabled}
-                style={{backgroundColor: "#0F4C45", borderColor: "#F26B3A", borderWidth:"0px"}}>Log in</button>
-                <Link to={"/forgot/password"} className="fw-bold" style={{color: "#126b62"}}>Forgot password?</Link>
+                    disabled={buttonDisabled}>Log in</button>
+                <Link to={"/forgot/password"} className="fw-bold lighter-green-color">Forgot password?</Link>
             </div>
             <p id="loginMessage" style={{textAlign: "center", color:messageColor, padding:"10px"}}
                hidden={buttonDisabled}>{message}</p>
@@ -101,7 +100,7 @@ export default function Login()
                 <LoadingBouncingDots />
             </div>
             <p className="small fw-bold mt-2 pt-1 mb-0 text-center">Don't have an account? {" "}
-                <Link to={"/register"} style={{color: "#126b62"}}>Register</Link></p>
+                <Link to={"/register"} className="lighter-green-color">Register</Link></p>
         </form>
     </div>
     )

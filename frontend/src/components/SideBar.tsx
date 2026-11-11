@@ -35,7 +35,7 @@ import {
 } from '@coreui/icons'
 
 import ApiCaller from "../apiCall/ApiCaller.ts";
-import UserInfo from "../data/UserInfo.ts";
+import User from "../data/User.ts";
 import {logout} from "../authentication/logout.ts"
 import {useNavigate} from "react-router-dom";
 import libseekLogo from "../assets/libseek-wordmark-pine.svg"
@@ -43,14 +43,14 @@ import githubLogo from "../assets/GitHub_logo.png"
 
 export const SideBar = () =>
 {
-    const [user, setUser] = useState<UserInfo | null>(null);
+    const [user, setUser] = useState<User | null>(null);
     const navigate = useNavigate();
 
     useEffect((): void =>
     {
         async function loadUser()
         {
-            const userInfo: UserInfo | null = await ApiCaller.getEmailNameSurname();
+            const userInfo: User | null = await ApiCaller.getEmailNameSurname();
             setUser(userInfo);
         }
         void loadUser()

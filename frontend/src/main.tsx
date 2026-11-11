@@ -15,6 +15,7 @@ import Register from "./pages/Register.tsx";
 import Reservations from "./pages/admin/Reservations.tsx";
 import AuthorAdd from "./pages/admin/AuthorAdd.tsx";
 import AuthorRemove from "./pages/admin/AuthorRemove.tsx";
+import ForgotPassword from "./pages/ForgotPassword.tsx";
 
 
 createRoot(document.getElementById('root')!).render(
@@ -24,6 +25,7 @@ createRoot(document.getElementById('root')!).render(
                 <Route path="" element={<Front />} />
                 <Route path="/about" element={<About />} />
                 <Route path="/register" element ={<Register />} />
+                <Route path="/forgot/password" element={<ForgotPassword />} />
             </Route>
             <Route element={<AdminLayout />}>
                 <Route path="/dashboard" element={<Dashboard />} />

@@ -1,8 +1,9 @@
 import PencilCard from "../../components/PencilCard.tsx";
-import BookTable from "../../components/BookTable.tsx";
-import {useEffect, useState} from "react";
+import AppTable from "../../components/AppTable.tsx";
+import {type JSX, useEffect, useState} from "react";
 import type Book from "../../data/Book.ts";
 import ApiCaller from "../../apiCall/ApiCaller.ts";
+import BookTable from "../../components/BookTable.tsx";
 
 export default function Dashboard()
 {
@@ -22,7 +23,7 @@ export default function Dashboard()
         <>
             <h4 className="mb-4">Dashboard</h4>
             <PencilCard/>
-            <BookTable books={books}></BookTable>
+            <BookTable books={books}/>
         </>
     )
 }

@@ -30,7 +30,7 @@ export default function BookRemove()
 
     async function handleSearch(title : string) : Promise<void>
     {
-        const getBook : Book[] | null = await ApiCaller.getBook(title);
+        const getBook : Book[] | null = await ApiCaller.getBooksByTitle(title);
 
         if (getBook == null)
         {

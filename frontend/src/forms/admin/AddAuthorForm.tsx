@@ -52,7 +52,6 @@ export default function AddAuthorForm()
             setNotificationVariant("danger");
             showNotification("Could not add. " + result.error, 1500);
             setIsLoading(false);
-            return
         }
     }
     return (

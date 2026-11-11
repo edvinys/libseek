@@ -27,7 +27,7 @@ export default function useBookRemoval()
                 {
                     const id : number = Number.parseInt(book.id);
                     const author : Author = new Author(id, book.authorName, book.authorSurname);
-                    const response : Result<Author> = await ApiCaller.removeAuthor(author);
+                    const response : Result = await ApiCaller.removeAuthor(author);
                     if (response.ok)
                     {
                         SuccessfullyRemoved();
