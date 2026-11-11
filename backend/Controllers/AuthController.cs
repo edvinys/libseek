@@ -5,6 +5,7 @@ using Library.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.EntityFrameworkCore;
 using MimeKit;
 using StackExchange.Redis.Extensions.Core.Abstractions;
 using System.Net.Mail;
@@ -32,7 +33,7 @@ namespace Library.Controllers
             Email = email;
         }
 
-        [HttpPost("api/forgot/password")]
+        [HttpPost("api/auth/forgot/password")]
         public async Task<IActionResult> ForgotPassword(string email)
         {
             if (!Auth.IsValidEmail(email))
@@ -51,10 +52,10 @@ namespace Library.Controllers
             return Ok();
         }
 
-        [HttpPost("api/login")]
-        public IActionResult Login(UserLoginRecord userLoginRecord)
+        [HttpPost("api/auth/login")]
+        public IActionResult Login(UserRecord userRecord)
         {
-            if (Auth.IsValidUser(userLoginRecord, out User? user))
+            if (Auth.IsValidUser(userRecord, out User? user))
             {
                 var token = Auth.GenerateToken(user);
                 // cookie options 
@@ -81,7 +82,7 @@ namespace Library.Controllers
             return Unauthorized();
         }
 
-        [HttpPost("api/logout")]
+        [HttpPost("api/auth/logout")]
         public IActionResult Logout()
         {
             var cookieOptions = new CookieOptions
@@ -98,13 +99,34 @@ namespace Library.Controllers
 
             return NoContent();
         }
+
+        [HttpPost("api/auth/register")]
+        public async Task<IActionResult> Register(UserRecord userRecord)
+        {
+            if (userRecord.Name == null || userRecord.Surname == null)
+            {
+                return BadRequest("Could not retrieve name or surname.");
+            }
+
+            bool emailAlreadyExists = await DB.Users.FirstOrDefaultAsync(user => user.Email == userRecord.Email) != null;
+            if (emailAlreadyExists)
+            {
+                return BadRequest("Email already exists.");
+            }
+
+            User user = new User(userRecord);
+            await DB.Users.AddAsync(user);
+            await DB.SaveChangesAsync();
+
+            return Ok();
+        }
     }
 
     [Authorize]
     [ApiController]
     public class ValidateUser : ControllerBase
     {
-        [HttpPost("api/login/auth")]
+        [HttpGet("api/auth")]
         public IActionResult AuthenticateToken()
         {
             return Accepted();
