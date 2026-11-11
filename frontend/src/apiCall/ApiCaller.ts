@@ -1,9 +1,9 @@
 import type Book from "../data/Book.ts";
-import UserInfo from "../data/UserInfo.ts";
+import User from "../data/User.ts";
 import Author from "../data/Author.ts";
 import mappers from "../apiCall/mappers.ts";
 
-export type Result<T> =
+export type Result<T = never> =
     {ok: true, fetchResult? : T | T[]} | {ok: false, error: string};
 
 // TO FIX: Remake returns with type Result.
@@ -14,12 +14,13 @@ export default class ApiCaller
 
     private constructor() {}
 
+    //==================AUTHENTICATION=========================//
     static async authenticate() : Promise<Response>
     {
         const response : Response = await fetch(
-            this.urlForApi + "api/login/auth",
+            this.urlForApi + "api/auth",
             {
-                method: "POST",
+                method: "GET",
                 credentials: "include",
             }
         );
@@ -40,26 +41,8 @@ export default class ApiCaller
         return response;
     }
 
-    static async getCountOfBooks() : Promise<number>
-    {
-        console.log("Fetching count of books...");
-
-        const response : Response = await fetch(
-            this.urlForApi + "api/books/count",
-            {
-                method: "GET",
-                credentials: "include",
-            }
-        );
-
-        const data : {count : number} = await response.json()
-        if (response.ok)
-        {
-            console.log("Successfully fetched books count")
-        }
-        return data.count;
-    }
-    static async getEmailNameSurname() : Promise<UserInfo | null>
+    //==================USER=========================//
+    static async getEmailNameSurname() : Promise<User | null>
     {
         const response: Response = await fetch(
             this.urlForApi + "api/user",
@@ -83,6 +66,64 @@ export default class ApiCaller
         return null;
     }
 
+    static async registerUser(user : User, password : string) : Promise<Result>
+    {
+        const userCreds = {
+            name : user.name,
+            surname : user.surname,
+            email : user.email,
+            password : password
+        }
+
+        try
+        {
+            const response : Response = await fetch(
+                this.urlForApi + "api/auth/register",
+                {
+                    method: "POST",
+                    credentials: "include",
+                    body: JSON.stringify(userCreds),
+                    headers: {
+                        "Content-Type": "application/json",
+                        }
+                }
+
+            )
+            if (response.ok)
+                return {ok: true}
+            else
+                return {ok: false, error: await response.text()}
+
+
+        }
+        catch (e)
+        {
+            console.log("Error trying to register user: " + user.name + user.surname);
+        }
+        return {ok: false, error: "It is likely that the server is offline."};
+    }
+
+    //==================BOOKS=========================//
+    static async getCountOfBooks() : Promise<number>
+    {
+        console.log("Fetching count of books...");
+
+        const response : Response = await fetch(
+            this.urlForApi + "api/books/count",
+            {
+                method: "GET",
+                credentials: "include",
+            }
+        );
+
+        const data : {count : number} = await response.json()
+        if (response.ok)
+        {
+            console.log("Successfully fetched books count")
+        }
+        return data.count;
+    }
+
     static async getBooks() : Promise<Book[]>
     {
         console.log("Retrieving books...")
@@ -101,8 +142,10 @@ export default class ApiCaller
     {
         console.log(`Retrieving book by title: ${title}...`)
 
+        const params = new URLSearchParams({ title: title });
+
         const response : Response = await fetch(
-            this.urlForApi + `api/books?title=${title}`,
+            this.urlForApi + `api/books?${params}`,
             {
                 method: "GET",
                 credentials: "include",
@@ -207,7 +250,9 @@ export default class ApiCaller
 
        return false;
     }
-    static async addAuthor(author : Author) : Promise<Result<Author>>
+
+    //==================AUTHORS=========================//
+    static async addAuthor(author : Author) : Promise<Result>
     {
         try
         {
@@ -240,7 +285,7 @@ export default class ApiCaller
         }
         return {ok: false, error: "It is likely that the server is offline."}
     }
-    static async removeAuthor(author : Author) : Promise<Result<Author>>
+    static async removeAuthor(author : Author) : Promise<Result>
     {
         try
         {
@@ -276,9 +321,10 @@ export default class ApiCaller
         try
         {
             console.log("Trying to get authors: " + nameOrSurname);
+            const params = new URLSearchParams({ nameOrSurname: nameOrSurname });
 
             const response : Response = await fetch(
-                this.urlForApi + `api/authors?nameOrSurname=${nameOrSurname}`,
+                this.urlForApi + `api/authors?${params}`,
                 {
                     method: "GET",
                     credentials: "include",
@@ -296,4 +342,5 @@ export default class ApiCaller
 
         return {ok: false, error: "It is likely that the server is offline."};
     }
+
 }
