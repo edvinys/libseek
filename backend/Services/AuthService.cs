@@ -18,7 +18,6 @@ namespace Library.Services
             DB = db;
             Configuration = configuration;
         }
-
         public string GenerateToken(User user)
         {
             ArgumentNullException.ThrowIfNull(user);
@@ -63,7 +62,7 @@ namespace Library.Services
             return true;
         }
 
-        public bool IsValidUser(UserLoginRecord userLoginRecord, out User? user)
+        public bool IsValidUser(UserRecord userLoginRecord, out User? user)
         {
             string email = userLoginRecord.Email;
             string password = userLoginRecord.Password;
