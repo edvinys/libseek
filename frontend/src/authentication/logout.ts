@@ -2,7 +2,7 @@ export async function logout() : Promise<void>
 {
     await fetch
     (
-        "https://localhost:7151/api/logout",
+        "https://localhost:7151/api/auth/logout",
         {
             method: "POST",
             credentials: "include",

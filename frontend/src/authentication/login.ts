@@ -6,9 +6,8 @@ export default async function Login(email: string, password: string): Promise<Re
     try
     {
         console.log("Sent:", JSON.stringify({Email: email, Password: password}));
-        let response: Response = await fetch
-        (
-            "https://localhost:7151/api/login",
+        let response: Response = await fetch(
+            "https://localhost:7151/api/auth/login",
             {
                 method: "POST",
                 credentials: "include",
