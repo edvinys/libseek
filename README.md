@@ -1,4 +1,4 @@
-# libseek
+![Libseek](https://github.com/edvinys/libseek/blob/master/frontend/public/libseek-logo-horizontal-reversed.svg)
 
 A full-stack library system, that ideally could be used in a realistic environment.
 
