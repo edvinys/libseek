@@ -1,7 +1,8 @@
 import NavBar from "../components/NavBar.tsx";
 import {Outlet, useNavigate} from "react-router-dom";
 import {useEffect} from "react";
-import ApiCaller from "../apiCall/ApiCaller.ts";
+import ApiCaller from "../API/ApiCaller.ts";
+import Footer from "../components/Footer.tsx";
 
 export default function UserLayout()
 {
@@ -21,15 +22,16 @@ export default function UserLayout()
         <>
             <NavBar
                 style={{
-                    background: "rgba(255, 255, 255, 0.5)",
+                    background: "rgba(248, 246, 240, 0.6)",
                     backdropFilter: "blur(12px)",
                     WebkitBackdropFilter: "blur(12px)",
-                    borderBottom: "1px solid rgba(230, 233, 242, 0.6)",
+                    borderBottom: "1px solid rgba(230, 233, 242, 1)",
                 }}
             />
             <main>
                 <Outlet />
             </main>
+            <Footer />
         </>
     )
 }
