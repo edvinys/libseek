@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256" role="img" aria-labelledby="t">
+  <title id="t">libseek symbol</title>
+  <path fill="#0F4C45" d="M64 24 H176 A24 24 0 0 1 200 48 V208 A24 24 0 0 1 176 232 H64 A8 8 0 0 1 56 224 V32 A8 8 0 0 1 64 24 Z"/>
+  <path fill="#F26B3A" d="M128 24 H160 V152 L144 136 L128 152 Z"/>
+</svg>

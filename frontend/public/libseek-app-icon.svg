@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256" role="img" aria-labelledby="t">
+  <title id="t">libseek app icon</title>
+  <rect width="256" height="256" rx="56" fill="#0F4C45"/>
+  <path fill="#F6F3EC" d="M85.76 54.24 H159.68 A15.84 15.84 0 0 1 175.52 70.08 V175.68 A15.84 15.84 0 0 1 159.68 191.52 H85.76 A5.28 5.28 0 0 1 80.48 186.24 V59.52 A5.28 5.28 0 0 1 85.76 54.24 Z"/>
+  <path fill="#F26B3A" d="M125.36 54.24 H151.76 V144 L138.56 130.8 L125.36 144 Z"/>
+</svg>
