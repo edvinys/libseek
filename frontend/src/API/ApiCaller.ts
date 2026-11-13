@@ -1,7 +1,7 @@
 import type Book from "../data/Book.ts";
 import User from "../data/User.ts";
 import Author from "../data/Author.ts";
-import mappers from "../apiCall/mappers.ts";
+import mappers from "../API/mappers.ts";
 
 export type Result<T = never> =
     {ok: true, fetchResult? : T | T[]} | {ok: false, error: string};
