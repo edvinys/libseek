@@ -2,7 +2,7 @@ import PencilCard from "../../components/PencilCard.tsx";
 import AppTable from "../../components/AppTable.tsx";
 import SearchBarButton from "../../components/SearchBarButton.tsx";
 import type Book from "../../data/Book.ts";
-import ApiCaller from "../../apiCall/ApiCaller.ts";
+import ApiCaller from "../../API/ApiCaller.ts";
 import {useEffect, useState} from "react";
 import AddBookForm from "../../forms/admin/AddBookForm.tsx";
 

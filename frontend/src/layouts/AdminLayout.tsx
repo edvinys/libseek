@@ -1,8 +1,8 @@
 import {useEffect, useState} from "react";
-import ApiCaller from "../apiCall/ApiCaller.ts"
+import ApiCaller from "../API/ApiCaller.ts"
 import {LoadingSpinner} from "../components/LoadingSpinner.tsx";
 import {type NavigateFunction, Outlet, useNavigate} from "react-router-dom";
-import {SideBar} from "../components/SideBar.tsx";
+import {SideBar} from "../components/admin/SideBar.tsx";
 
 export default function AdminLayout()
 {
@@ -27,8 +27,8 @@ export default function AdminLayout()
         return(
             <div className="d-flex min-vh-100">
             <SideBar />
-            <main className="flex-grow-1 p-4 bg-body-tertiary">
-                <Outlet/>
+            <main className="flex-grow-1 p-4" style={{backgroundColor: "#F8F6F0"}}>
+                <Outlet />
             </main>
         </div>)
 }

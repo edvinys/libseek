@@ -2,7 +2,7 @@ import {type SubmitEvent, useState} from "react";
 import Form from "react-bootstrap/esm/Form";
 import {Button} from "react-bootstrap";
 import User from "../data/User.ts";
-import ApiCaller, {type Result} from "../apiCall/ApiCaller.ts";
+import ApiCaller, {type Result} from "../API/ApiCaller.ts";
 import useNotification from "../hooks/useNotification.ts";
 import InfoAlert from "../components/InfoAlert.tsx";
 import type {Variant} from "react-bootstrap/cjs/types";
@@ -124,8 +124,8 @@ export default function RegisterForm()
 
             {/* Button */}
             <Button type="submit"
-                    variant="outline-primary"
-                    className={"mb-3 d-block mx-auto rounded-pill"} disabled={mismatch && !password}>
+                    variant="outline-success"
+                    className={"register-button mb-3 d-block mx-auto rounded-pill"} disabled={mismatch && !password}>
                 Register
             </Button>
         </Form>

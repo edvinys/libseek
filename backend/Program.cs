@@ -13,7 +13,6 @@ string frontendURL = builder.Configuration["URL:frontend"]
     ?? throw new InvalidOperationException("Could not find frontend url in appsettings.json");
 
 //---- Add database connection
-
 builder.Services.AddDbContext<LibraryContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
@@ -49,8 +48,8 @@ builder.Services.AddControllers();
 // Use scoped since they touch the database.
 builder.Services.AddScoped<IEmailService, SmtpEmailService>(); 
 builder.Services.AddScoped<IAuthService, AuthService>();
-//---- Configure swagger, accept JWT Auth
 
+//---- Configure swagger, accept JWT Auth
 builder.Services.AddSwaggerGen(options =>
 {
     options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
@@ -77,7 +76,6 @@ builder.Services.AddSwaggerGen(options =>
 });
 
 //---- Add authentication
-
 string? jwtKey = builder.Configuration["JWTConfig:Key"];
 
 builder.Services
@@ -118,7 +116,6 @@ builder.Services
 builder.Services.AddAuthorization();
 
 //---- Build
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

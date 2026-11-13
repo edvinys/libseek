@@ -29,7 +29,7 @@ public partial class User
         Email = email;
         PasswordHash = BCrypt.Net.BCrypt.HashPassword(password);
     }
-    public User(UserRecord userRecord) : this(userRecord.Name, userRecord.Surname,
+    public User(UserRecord userRecord) : this(userRecord.Name , userRecord.Surname,
         userRecord.Email, userRecord.Password)
     {
     }

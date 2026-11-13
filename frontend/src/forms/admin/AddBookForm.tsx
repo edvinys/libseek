@@ -2,13 +2,13 @@ import Form from 'react-bootstrap/Form';
 import {Button, InputGroup} from "react-bootstrap";
 import {type SubmitEvent, useState} from "react";
 import type Book from "../../data/Book.ts";
-import ApiCaller from "../../apiCall/ApiCaller.ts";
+import ApiCaller from "../../API/ApiCaller.ts";
 import "react-bootstrap/"
 import DateRange from "../../components/DateRange.tsx";
 import useNotification from "../../hooks/useNotification.ts";
 import InfoAlert from "../../components/InfoAlert.tsx";
 import type {Variant} from "react-bootstrap/cjs/types";
-import AppForm from "../../components/AppForm.tsx";
+import AppForm from "../AppForm.tsx";
 
 export default function AddBookForm()
 {

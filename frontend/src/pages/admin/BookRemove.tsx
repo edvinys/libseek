@@ -2,11 +2,11 @@ import AppTable from "../../components/AppTable.tsx";
 import SearchBarButton from "../../components/SearchBarButton.tsx";
 import {type JSX, useEffect, useState} from "react";
 import type Book from "../../data/Book.ts";
-import ApiCaller, {type Result} from "../../apiCall/ApiCaller.ts";
+import ApiCaller, {type Result} from "../../API/ApiCaller.ts";
 import InfoAlert from "../../components/InfoAlert.tsx";
 import Form from 'react-bootstrap/Form'
 import useBookRemoval from "../../hooks/useBookRemoval.ts";
-import BookTable from "../../components/BookTable.tsx";
+import BookTable from "../../components/admin/BookTable.tsx";
 
 export default function BookRemove()
 {

@@ -1,4 +1,4 @@
-import ApiCaller, {type Result} from "../apiCall/ApiCaller.ts";
+import ApiCaller, {type Result} from "../API/ApiCaller.ts";
 import Author from "../data/Author.ts";
 import useNotification from "./useNotification.ts";
 import {useState} from "react";

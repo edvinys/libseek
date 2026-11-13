@@ -1,5 +1,5 @@
 import InfoAlert from "../../components/InfoAlert.tsx";
-import ApiCaller, {type Result} from "../../apiCall/ApiCaller.ts";
+import ApiCaller, {type Result} from "../../API/ApiCaller.ts";
 import type Author from "../../data/Author.ts";
 import {useEffect, useState} from "react";
 import useNotification from "../../hooks/useNotification.ts";
@@ -7,9 +7,9 @@ import type {Variant} from "react-bootstrap/cjs/types";
 import useBookRemoval from "../../hooks/useBookRemoval.ts";
 import type Book from "../../data/Book.ts";
 import SearchBarButton from "../../components/SearchBarButton.tsx";
-import BookTable from "../../components/BookTable.tsx";
+import BookTable from "../../components/admin/BookTable.tsx";
 import Form from "react-bootstrap/esm/Form";
-import AuthorTable from "../../components/AuthorTable.tsx";
+import AuthorTable from "../../components/admin/AuthorTable.tsx";
 
 export default function AuthorRemove()
 {

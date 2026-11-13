@@ -2,8 +2,8 @@ import {type SubmitEvent, useState} from "react";
 import useNotification from "../../hooks/useNotification.ts";
 import type {Variant} from "react-bootstrap/cjs/types";
 import type Book from "../../data/Book.ts";
-import ApiCaller, {type Result} from "../../apiCall/ApiCaller.ts";
-import AppForm from "../../components/AppForm.tsx";
+import ApiCaller, {type Result} from "../../API/ApiCaller.ts";
+import AppForm from "../AppForm.tsx";
 import InfoAlert from "../../components/InfoAlert.tsx";
 import type Author from "../../data/Author.ts";
 

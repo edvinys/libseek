@@ -2,8 +2,8 @@ import PencilCard from "../../components/PencilCard.tsx";
 import AppTable from "../../components/AppTable.tsx";
 import {type JSX, useEffect, useState} from "react";
 import type Book from "../../data/Book.ts";
-import ApiCaller from "../../apiCall/ApiCaller.ts";
-import BookTable from "../../components/BookTable.tsx";
+import ApiCaller from "../../API/ApiCaller.ts";
+import BookTable from "../../components/admin/BookTable.tsx";
 
 export default function Dashboard()
 {

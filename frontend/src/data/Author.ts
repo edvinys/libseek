@@ -1,5 +1,3 @@
-import mappers from "../apiCall/mappers.ts";
-
 export default class Author
 {
     public id : number | null;

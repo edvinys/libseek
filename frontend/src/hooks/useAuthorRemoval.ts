@@ -2,7 +2,7 @@ import {useState} from "react";
 import useNotification from "./useNotification.ts";
 import type {Variant} from "react-bootstrap/cjs/types";
 import type Author from "../data/Author.ts";
-import ApiCaller, {type Result} from "../apiCall/ApiCaller.ts";
+import ApiCaller, {type Result} from "../API/ApiCaller.ts";
 
 export default function useAuthorRemoval()
 {
