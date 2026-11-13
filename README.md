@@ -1,4 +1,4 @@
-<img src="frontend/public/libseek-logo-horizontal-reversed.svg" alt="Libseek" width="300">
+## <img src="frontend/public/libseek-logo-horizontal-reversed.svg" alt="Libseek" width="300">
 
 A full-stack library system, that ideally could be used in a realistic environment.
 
