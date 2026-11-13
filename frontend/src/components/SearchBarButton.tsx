@@ -1,6 +1,7 @@
 import {useEffect, useState} from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "@coreui/coreui/dist/css/coreui.min.css";
+import {Button} from "react-bootstrap";
 
 type SearchBarProps = {
     onSearch: (value: string) => void;
@@ -41,7 +42,7 @@ export default function SearchBarButton({onSearch, onBadInputs}: SearchBarProps)
                                        }
                                    }
                                }}/>
-                        <button type="button" className="btn btn-outline-primary"
+                        <Button type="button" variant={"outline-success"} className="register-button mb-3 d-block mx-auto rounded-pill"
                                 style={{marginTop: "10px", display:"flex", marginLeft:"auto",marginRight:"auto"}}
                                 onClick={(e) =>
                                 {
@@ -53,7 +54,7 @@ export default function SearchBarButton({onSearch, onBadInputs}: SearchBarProps)
                                         setBadInputMessage("");
                                     }
                                 }}>
-                            Search</button>
+                            Search</Button>
                         <p id="badInputMessage" style={{textAlign: "center", color:"darkred"}}>{badInputMessage}</p>
                     </div>
                 </div>

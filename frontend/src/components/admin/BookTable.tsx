@@ -1,6 +1,6 @@
-import type Book from "../data/Book.ts";
+import type Book from "../../data/Book.ts";
 import type {JSX} from "react";
-import AppTable from "./AppTable.tsx";
+import AppTable from "../AppTable.tsx";
 
 export type BookTableProps = {
     books : Book[] | Book;

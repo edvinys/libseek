@@ -1,5 +1,5 @@
 import Table from "react-bootstrap/Table"
-import ApiCaller from "../apiCall/ApiCaller.ts";
+import ApiCaller from "../API/ApiCaller.ts";
 import type Book from "../data/Book.ts";
 import {Children, isValidElement, type JSX, type ReactNode} from "react";
 

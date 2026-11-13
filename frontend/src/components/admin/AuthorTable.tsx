@@ -1,5 +1,5 @@
-import type Author from "../data/Author.ts";
-import AppTable from "./AppTable.tsx";
+import type Author from "../../data/Author.ts";
+import AppTable from "../AppTable.tsx";
 import type {JSX} from "react";
 
 type authorTableProps =

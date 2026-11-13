@@ -34,12 +34,12 @@ import {
     cilUser,
 } from '@coreui/icons'
 
-import ApiCaller from "../apiCall/ApiCaller.ts";
-import User from "../data/User.ts";
-import {logout} from "../authentication/logout.ts"
+import ApiCaller from "../../API/ApiCaller.ts";
+import User from "../../data/User.ts";
+import {logout} from "../../authentication/logout.ts"
 import {useNavigate} from "react-router-dom";
-import libseekLogo from "../assets/libseek-wordmark-pine.svg"
-import githubLogo from "../assets/GitHub_logo.png"
+import libseekLogo from "../../../public/libseek-logo-horizontal-color.svg"
+import githubLogo from "../../assets/GitHub_logo.png"
 
 export const SideBar = () =>
 {

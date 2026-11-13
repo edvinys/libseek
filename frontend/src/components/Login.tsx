@@ -59,7 +59,7 @@ export default function Login()
     }
 
     return (
-        <div title="login form">
+        <div>
         <h3 className="text-center">Log in</h3>
         <form
             className='form-center-width-limit'
@@ -67,6 +67,8 @@ export default function Login()
             onSubmit={(event: React.SubmitEvent<HTMLFormElement>) =>
             {event.preventDefault();
                 void handleLogin();}}>
+
+            {/* Email input */}
             <div className="mb-3">
                 <label htmlFor="emailInput"
                        className="form-label">Email address</label>
@@ -77,6 +79,8 @@ export default function Login()
                     aria-describedby="emailHelp"
                     onChange={(event) => setEmail(event.target.value)}/>
             </div>
+
+            {/* Password input */}
             <div className="mb-3">
                 <label htmlFor="passwordInput" className="form-label">Password</label>
                 <input
@@ -86,21 +90,29 @@ export default function Login()
                     onChange={(event) =>
                         setPassword(event.target.value)}/>
             </div>
-            <div className="d-flex justify-content-between align-items-center">
-                <button
-                    type="submit"
-                    className="btn btn-primary btn-ghost button-fill-green-border-orange"
-                    id="submitButton"
-                    disabled={buttonDisabled}>Log in</button>
-                <Link to={"/forgot/password"} className="fw-bold lighter-green-color">Forgot password?</Link>
+
+            {/* Log in button */}
+            <div className="login-message-slot">
+                <div className="d-flex justify-content-between align-items-center">
+                    <button
+                        type="submit"
+                        className="btn btn-primary btn-ghost login-button"
+                        id="submitButton"
+                        disabled={buttonDisabled}>Log in</button>
+                    <Link to={"/forgot/password"} className="fw-bold lighter-green-color">Forgot password?</Link>
+                </div>
+
+                {/* MESSAGE AND LOADING */}
+                <p id="loginMessage" style={{textAlign: "center", color:messageColor, paddingTop: "10px"}}
+                   hidden={buttonDisabled}>{message}</p>
+                <div style={{display:"flex", justifyContent:"center"}} hidden={!buttonDisabled}>
+                    <LoadingBouncingDots />
+                </div>
+
+                {/* REGISTER */}
+                <p className="small fw-bold mt-2 pt-1 mb-0 text-center">Don't have an account? {" "}
+                    <Link to={"/register"} className="lighter-green-color">Register</Link></p>
             </div>
-            <p id="loginMessage" style={{textAlign: "center", color:messageColor, padding:"10px"}}
-               hidden={buttonDisabled}>{message}</p>
-            <div style={{display:"flex", justifyContent:"center"}} hidden={!buttonDisabled}>
-                <LoadingBouncingDots />
-            </div>
-            <p className="small fw-bold mt-2 pt-1 mb-0 text-center">Don't have an account? {" "}
-                <Link to={"/register"} className="lighter-green-color">Register</Link></p>
         </form>
     </div>
     )

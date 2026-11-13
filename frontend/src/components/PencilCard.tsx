@@ -1,6 +1,6 @@
 import "react"
 import {useEffect, useState} from "react";
-import ApiCaller from "../apiCall/ApiCaller.ts";
+import ApiCaller from "../API/ApiCaller.ts";
 
 export default function PencilCard()
 {
